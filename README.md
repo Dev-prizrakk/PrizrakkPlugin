@@ -6,7 +6,7 @@
 
 # Технической составляющие!
 **API** ```SpigotAPI```
-**Зависимости** ```MySQL``` , ```SuperVanish```
+**Зависимости** ```MySQL```
 
 # Планы на плагин
 **1** Сделать упрощеную версию плагина [EssentialsX](https://www.spigotmc.org/resources/essentialsx.9089/)
