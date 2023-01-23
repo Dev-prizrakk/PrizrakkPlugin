@@ -1,0 +1,23 @@
+# § для использования цветов
+# Версия конфигиа 0.2
+message:
+  prefix: "§6[§4FabulousCraft§4] §f"
+  noperm: "У вас не прав на эту команду!"
+  success: "Поздравляю вы забрали свой подарок за отыграное время!"
+  reload: "Плагин перезапущен!"
+  noconsole: "Команда доступна только игроку!"
+  health: "Вы исцелены!"
+  feed: "Вы были покормлены!"
+  gm: "Ваш игровой режим изменился на"
+  offline: "Этот игрок оффлайн"
+  day: "Установлено дневное время"
+config:
+  version: 0.6
+  web-port: 11222
+  time-reward: 3000 //В тиках
+  reward-item: diamond //писать как и пишет в /itemdb для 100% результата
+  reward-count: 1
+  mysql:
+    user: "User"
+    password: "querty123"
+    connect: "jdbc:mysql://ip:port/DataBaseName"

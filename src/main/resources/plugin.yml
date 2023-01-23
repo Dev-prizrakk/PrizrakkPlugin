@@ -1,0 +1,23 @@
+name: FabulousCraft
+version: '${project.version}'
+main: com.prizrakk.fabulouscraft.FabulousCraft
+prefix: FabulousCraft
+authors: [ prizrakk ]
+description: Плагин для проекта FabulousCraft!
+commands:
+  day:
+    description: делает день
+    usage: /<command>
+    permission: prizrakk.time.day
+  heal:
+    description: Востонавливает здоровье
+    usage: /<command>
+    permission: prizrakk.heal
+  feed:
+    description: Востоналивает голод
+    usage: /<command>
+    permission: prizrakk.feed
+  gm:
+    description: Изменяет режим
+    usage: /<command> 0,1,2,3
+  prizrakk: {}
