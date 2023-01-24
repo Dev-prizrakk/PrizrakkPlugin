@@ -20,4 +20,6 @@ config:
   mysql:
     user: "User"
     password: "querty123"
-    connect: "jdbc:mysql://ip:port/DataBaseName"
+    database: "fabulous_plugin"
+    ip: "localhost"
+    port: "3306"
