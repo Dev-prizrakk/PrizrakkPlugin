@@ -25,7 +25,7 @@ public class Database {
             return connection;
         }
 
-        String url = plugin.getConfig().getString("config.mysql.connect");
+        String url = "jdbc:mysql://"+ plugin.getConfig().getString("config.mysql.ip") + ":" + plugin.getConfig().getString("config.mysql.port") + "/" + plugin.getConfig().getString("config.mysql.database");
         String user = plugin.getConfig().getString("config.mysql.user");
         String password = plugin.getConfig().getString("config.mysql.password");
 
