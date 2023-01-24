@@ -34,20 +34,7 @@ public final class FabulousCraft extends JavaPlugin {
             throw new RuntimeException(e);
         }
         // Лог о запуске
-        log.info(" ");
-        log.info(ChatColor.BLUE + "╔═══╗──╔╗────╔╗──────────╔═══╗─────╔═╦╗");
-        log.info(ChatColor.BLUE + "║╔══╝──║║────║║──────────║╔═╗║─────║╔╝╚╗");
-        log.info(ChatColor.BLUE + "║╚══╦══╣╚═╦╗╔╣║╔══╦╗╔╦══╗║║─╚╬═╦══╦╝╚╗╔╝");
-        log.info(ChatColor.BLUE + "║╔══╣╔╗║╔╗║║║║║║╔╗║║║║══╣║║─╔╣╔╣╔╗╠╗╔╣║");
-        log.info(ChatColor.BLUE + "║║──║╔╗║╚╝║╚╝║╚╣╚╝║╚╝╠══║║╚═╝║║║╔╗║║║║╚╗");
-        log.info(ChatColor.BLUE + "╚╝──╚╝╚╩══╩══╩═╩══╩══╩══╝╚═══╩╝╚╝╚╝╚╝╚═╝");
-        log.info(" ");
         log.info(ChatColor.GOLD + "Версия: "+ getConfig().getString("config.version"));
-        log.warning(ChatColor.RED +"Плагин предназначен для проекта FabulousCraft");
-        log.warning(ChatColor.RED +"Плагин еще сырой могут быть дыры!");
-        log.info(" ");
-        log.info(ChatColor.GOLD + "Подключаемся к базе данных!");
-        log.info(" ");
         //Подключаем к базе данных!
         try {
             this.database = new Database(this);
@@ -71,19 +58,7 @@ public final class FabulousCraft extends JavaPlugin {
 
 
     @Override
-    public void onDisable() {
-        // Plugin shutdown logic
-        log.info(" ");
-        log.info("╔═══╗──╔╗────╔╗──────────╔═══╗─────╔═╦╗");
-        log.info("║╔══╝──║║────║║──────────║╔═╗║─────║╔╝╚╗");
-        log.info("║╚══╦══╣╚═╦╗╔╣║╔══╦╗╔╦══╗║║─╚╬═╦══╦╝╚╗╔╝");
-        log.info("║╔══╣╔╗║╔╗║║║║║║╔╗║║║║══╣║║─╔╣╔╣╔╗╠╗╔╣║");
-        log.info("║║──║╔╗║╚╝║╚╝║╚╣╚╝║╚╝╠══║║╚═╝║║║╔╗║║║║╚╗");
-        log.info("╚╝──╚╝╚╩══╩══╩═╩══╩══╩══╝╚═══╩╝╚╝╚╝╚╝╚═╝");
-        log.info(" ");
-        log.info("Плагин отключен!");
-        log.info(" ");
-    }
+    public void onDisable() {}
 
     public Database getDatabase() {
         return database;
