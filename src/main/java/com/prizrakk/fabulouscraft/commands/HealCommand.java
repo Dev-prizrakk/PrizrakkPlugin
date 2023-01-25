@@ -21,7 +21,7 @@ public class HealCommand implements CommandExecutor {
             sender.sendMessage(plugin.getConfig().getString("message.prefix") + plugin.getConfig().getString("message.noconsole"));
             return true;
         }
-        if (!player.hasPermission("prizrakk.heal") || sender.hasPermission("prizrakk.*")) {
+        if (!player.hasPermission("prizrakk.heal") || !sender.hasPermission("prizrakk.*")) {
             sender.sendMessage(plugin.getConfig().getString("message.prefix") + plugin.getConfig().getString("message.noperm"));
             return true;
         }
