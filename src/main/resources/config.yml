@@ -1,5 +1,5 @@
 # § для использования цветов
-# Версия конфигиа 0.2
+# Версия конфигиа 0.3
 message:
   prefix: "§6[§4FabulousCraft§4] §f"
   noperm: "У вас не прав на эту команду!"
@@ -15,14 +15,12 @@ config:
   mconline:
     enable: false
     port-bind: 11111
+    # Строка port-bind времено не работает!
   version: 0.6
-  web-port: 11222
   time-reward: 3000 //В тиках
   reward-item: diamond //писать как и пишет в /itemdb для 100% результата
   reward-count: 1
   mysql:
-    user: "User"
+    user: "user"
     password: "querty123"
-    database: "fabulous_plugin"
-    ip: "localhost"
-    port: "3306"
+    url: "jdbc:mysql://127.0.0.1:3306/PluginDataBase"

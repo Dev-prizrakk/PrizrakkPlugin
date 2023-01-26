@@ -20,4 +20,10 @@ commands:
   gm:
     description: Изменяет режим
     usage: /<command> 0,1,2,3
-  prizrakk: {}
+  prizrakk:
+    description: Системные команды
+    usage: /<command>
+  admin:
+    description: Команды для администрации
+    usage: /<command>
+    permission: prizrakk.admin
