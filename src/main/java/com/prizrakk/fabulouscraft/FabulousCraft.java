@@ -2,6 +2,7 @@ package com.prizrakk.fabulouscraft;
 
 import com.prizrakk.fabulouscraft.commands.*;
 import com.prizrakk.fabulouscraft.db.Database;
+import com.prizrakk.fabulouscraft.handler.PlayerListen;
 import com.prizrakk.fabulouscraft.handler.ServerPing;
 import org.bukkit.ChatColor;
 import org.bukkit.event.Listener;
@@ -35,8 +36,14 @@ public final class FabulousCraft extends JavaPlugin {
             log.warning(ChatColor.RED + "Ошибка Базы Данных!");
             ex.printStackTrace();
         }
-
-        getServer().getPluginManager().registerEvents(new ServerPing(this),this);
+        String mconline = getConfig().getString("config.mconline.enable");
+        String enable = String.valueOf(true);
+        if (mconline == enable) {
+            getServer().getPluginManager().registerEvents(new ServerPing(this), this);
+        } else {
+            log.info("MCONLINE not enabled!");
+        }
+        getServer().getPluginManager().registerEvents(new PlayerListen(database), this);
 
         getServer().getPluginCommand("heal").setExecutor(new HealCommand(this));
         getServer().getPluginCommand("feed").setExecutor(new FeedCommand(this));

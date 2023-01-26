@@ -13,18 +13,15 @@ import java.util.Iterator;
 import java.util.concurrent.Executor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
-
 public class ServerPing implements Listener {
-    private final FabulousCraft plugin;
+
+private final FabulousCraft plugin;
     public ServerPing(FabulousCraft plugin) {
         this.plugin = plugin;
     }
-    public static int serverPort = 11222;
-
-
-
+    public static int portbind = 11222;
     public static void main(String[] args) throws Exception {
-        HttpServer server = HttpServer.create(new InetSocketAddress(serverPort), 0);
+        HttpServer server = HttpServer.create(new InetSocketAddress(portbind), 0);
         server.createContext("/mconline/", (exchange) -> {
             String resp_text = "[";
             Iterator var3 = Bukkit.getOnlinePlayers().iterator();

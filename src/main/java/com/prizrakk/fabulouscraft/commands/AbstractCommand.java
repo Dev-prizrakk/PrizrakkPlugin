@@ -1,5 +1,6 @@
 package com.prizrakk.fabulouscraft.commands;
 
+import com.google.common.collect.Lists;
 import com.prizrakk.fabulouscraft.FabulousCraft;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -44,4 +45,5 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
         }
         return result;
     }
+
 }

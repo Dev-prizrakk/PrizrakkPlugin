@@ -1,17 +1,10 @@
 package com.prizrakk.fabulouscraft.commands;
 
 import com.prizrakk.fabulouscraft.FabulousCraft;
-import com.prizrakk.fabulouscraft.FabulousCraft;
-import org.bukkit.ChatColor;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 public class FeedCommand implements CommandExecutor {
 

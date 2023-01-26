@@ -1,10 +1,18 @@
 package com.prizrakk.fabulouscraft.commands;
 
 import com.prizrakk.fabulouscraft.FabulousCraft;
+import com.prizrakk.fabulouscraft.db.Database;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import static java.sql.DriverManager.getConnection;
 
 public class AdminWarnCommand implements CommandExecutor {
 
@@ -50,6 +58,7 @@ public class AdminWarnCommand implements CommandExecutor {
     public AdminWarnCommand(FabulousCraft plugin) {
         this.plugin = plugin;
     }
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Player player = (Player) sender;
@@ -61,6 +70,8 @@ public class AdminWarnCommand implements CommandExecutor {
             String sql = "";
             player.sendMessage(plugin.getConfig().getString(plugin.getConfig().getString("message.prefix") + "message.reload"));
         }
+
+
 
         return true;
     }

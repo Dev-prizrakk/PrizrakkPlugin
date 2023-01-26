@@ -3,16 +3,13 @@ package com.prizrakk.fabulouscraft.commands;
 
 import com.prizrakk.fabulouscraft.FabulousCraft;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import static com.sun.javafx.binding.Logging.getLogger;
 
 public class gmSurvivalCommand implements CommandExecutor {
     private final FabulousCraft plugin;

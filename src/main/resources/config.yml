@@ -12,6 +12,9 @@ message:
   offline: "Этот игрок оффлайн"
   day: "Установлено дневное время"
 config:
+  mconline:
+    enable: false
+    port-bind: 11111
   version: 0.6
   web-port: 11222
   time-reward: 3000 //В тиках
