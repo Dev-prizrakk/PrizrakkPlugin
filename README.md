@@ -1,4 +1,4 @@
-# FabulousPlugin - Pre-release
+# PrizrakkPlugin - Pre-release
 **Описания**
 ```
 Плагин который будет совмещать в себе множество функций!
