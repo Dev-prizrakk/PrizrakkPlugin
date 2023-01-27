@@ -21,4 +21,5 @@
 # Ссылки
 
 [**Discord Support**](https://discord.gg/U6H9Zw7Fhg)
+
 **Server tested** node.prizrakk.xyz:30996
