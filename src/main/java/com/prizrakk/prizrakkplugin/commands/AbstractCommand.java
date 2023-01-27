@@ -1,6 +1,5 @@
 package com.prizrakk.prizrakkplugin.commands;
 
-import com.google.common.collect.Lists;
 import com.prizrakk.prizrakkplugin.PrizrakkPlugin;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -21,7 +20,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 
     public abstract void execute(CommandSender sender, String label, String[] args);
 
-    public List<String> complete(CommandSender sender, String[] args) {
+    public List<String> complete() {
         return null;
     }
 
@@ -33,7 +32,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public  List<String> onTabComplete( CommandSender sender, Command command, String alias, String[] args) {
-        return filter(complete(sender, args), args);
+        return filter(complete(), args);
     }
 
     private List<String> filter(List<String> list, String[] args) {

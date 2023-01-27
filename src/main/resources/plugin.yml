@@ -1,7 +1,7 @@
-name: FabulousCraft
-version: '${project.version}'
-main: com.prizrakk.fabulouscraft.FabulousCraft
-prefix: FabulousCraft
+name: PrizrakkPlugin
+version: '0.2'
+main: com.prizrakk.prizrakkplugin.PrizrakkPlugin
+prefix: PrizrakkPlugin
 authors: [ prizrakk ]
 description: Плагин для проекта FabulousCraft!
 commands:
@@ -9,6 +9,10 @@ commands:
     description: делает день
     usage: /<command>
     permission: prizrakk.time.day
+  night:
+    description: Делает ночь
+    usage: /<command>
+    permission: prizrakk.time.night
   heal:
     description: Востонавливает здоровье
     usage: /<command>

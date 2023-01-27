@@ -1,5 +1,6 @@
 package com.prizrakk.prizrakkplugin.handler;
 
+import com.prizrakk.prizrakkplugin.PrizrakkPlugin;
 import com.prizrakk.prizrakkplugin.db.Database;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,9 +15,11 @@ import java.util.Date;
 
 public class PlayerListen implements Listener {
 
+    private final PrizrakkPlugin plugin;
     private final Database database;
 
-    public PlayerListen(Database database) {
+    public PlayerListen(PrizrakkPlugin plugin, Database database) {
+        this.plugin = plugin;
         this.database = database;
     }
 
@@ -25,7 +28,7 @@ public class PlayerListen implements Listener {
         PlayerStats playerStats = database.findPlayerStatsByUUID(player.getUniqueId().toString());
 
         if (playerStats == null) {
-            playerStats = new PlayerStats(player.getUniqueId().toString(), 0, 0, 0, 0.0, new Date(), new Date());
+            playerStats = new PlayerStats(player.getUniqueId().toString(), 0, 0, 0, 0,0.0, new Date(), new Date());
             database.createPlayerStats(playerStats);
         }
 
@@ -42,7 +45,7 @@ public class PlayerListen implements Listener {
             database.updatePlayerStats(playerStats);
         }catch (SQLException e){
             e.printStackTrace();
-            System.out.println("Could not update player stats after join.");
+            plugin.getLogger().warning("Could not update player stats after join.");
         }
 
     }
@@ -57,7 +60,7 @@ public class PlayerListen implements Listener {
             database.updatePlayerStats(playerStats);
         }catch (SQLException e1){
             e1.printStackTrace();
-            System.out.println("Could not update player stats after quit.");
+            plugin.getLogger().warning("Could not update player stats after quit.");
         }
 
     }
@@ -74,7 +77,7 @@ public class PlayerListen implements Listener {
             database.updatePlayerStats(playerStats);
         } catch (SQLException e1) {
             e1.printStackTrace();
-            System.out.println("Could not update player stats after block break.");
+            plugin.getLogger().warning("Could not update player stats after block break.");
         }
 
     }
@@ -82,7 +85,6 @@ public class PlayerListen implements Listener {
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent e){
 
-        //see if the player was killed by another player
         if(e.getEntity().getKiller() == null){
             return;
         }
@@ -90,7 +92,6 @@ public class PlayerListen implements Listener {
         Player killer = e.getEntity().getKiller();
         Player p = e.getEntity();
 
-        //Update the stats of both people
         try{
             PlayerStats killerStats = getPlayerStatsFromDatabase(killer);
             PlayerStats pStats = getPlayerStatsFromDatabase(p);
@@ -106,7 +107,7 @@ public class PlayerListen implements Listener {
 
         }catch (SQLException e1){
             e1.printStackTrace();
-            System.out.println("Could not update player stats after death.");
+            plugin.getLogger().warning("Could not update player stats after death.");
         }
 
     }

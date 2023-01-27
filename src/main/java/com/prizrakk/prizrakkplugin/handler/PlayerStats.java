@@ -7,6 +7,7 @@ public class PlayerStats {
     private String playerUUID;
 
     //random stats on each player
+    private final int warn_count;
     private int deaths;
     private int kills;
     private long blocksBroken;
@@ -16,7 +17,7 @@ public class PlayerStats {
     private Date lastLogin;
     private Date lastLogout;
 
-    public PlayerStats(String playerUUID, int deaths, int kills, long blocksBroken, double balance, Date lastLogin, Date lastLogout) {
+    public PlayerStats(String playerUUID, int warn_count, int deaths, int kills, long blocksBroken, double balance, Date lastLogin, Date lastLogout) {
         this.playerUUID = playerUUID;
         this.deaths = deaths;
         this.kills = kills;
@@ -24,6 +25,7 @@ public class PlayerStats {
         this.balance = balance;
         this.lastLogin = lastLogin;
         this.lastLogout = lastLogout;
+        this.warn_count = warn_count;
     }
 
     public String getPlayerUUID() {
@@ -36,6 +38,9 @@ public class PlayerStats {
 
     public int getDeaths() {
         return deaths;
+    }
+    public int getWarn_count() {
+        return warn_count;
     }
 
     public void setDeaths(int deaths) {

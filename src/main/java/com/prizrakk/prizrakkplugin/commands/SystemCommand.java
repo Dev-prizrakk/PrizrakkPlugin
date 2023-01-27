@@ -6,9 +6,7 @@ import org.bukkit.command.CommandSender;
 
 public class SystemCommand extends AbstractCommand {
 
-    public SystemCommand(PrizrakkPlugin command) {
-        super("prizrakk");
-    }
+
 
     public SystemCommand() {
         super("prizrakk");
@@ -34,13 +32,28 @@ public class SystemCommand extends AbstractCommand {
                 return;
             }
             //Player player = (Player) sender;
-            sender.sendMessage("§2=-=-=-=-=-=-=-=§6Fabulous help list§2=-=-=-=-=-=-=-=");
+            sender.sendMessage("§2=-=-=-=-=-=-=-=§6PrizrakkPlugin help list§2=-=-=-=-=-=-=-=");
+            sender.sendMessage("                     §6Plugin Version 1.0                   ");
+            sender.sendMessage("         Support Server: https://discord.gg/U6H9Zw7Fhg      ");
+            sender.sendMessage(" ");
             sender.sendMessage("1. /prizrakk reload - Перезапускает плагин!");
             sender.sendMessage("2. /admin setwarn - выдает выговор администратору");
             sender.sendMessage("3. /admin delwarn - удаляет варн");
-            sender.sendMessage("4. /pirzrakk ........");
+            sender.sendMessage("4. /pirzrakk perm - показывает список доступных пермишинов в плагине");
             sender.sendMessage("5. /prizrakk ........");
-            sender.sendMessage("§2=-=-=-=-=-=-=-=§6Fabulous help list§2=-=-=-=-=-=-=-=");
+            sender.sendMessage("§2=-=-=-=-=-=-=-=§6PrizrakkPlugin help list§2=-=-=-=-=-=-=-=");
+            return;
+        }
+        if (args[0].equalsIgnoreCase("perm")) {
+            sender.sendMessage("§2=-=-=-=-=-=-=-=§6PrizrakkPlugin permission list§2=-=-=-=-=-=-=-=");
+            sender.sendMessage("1. prizrakk.reload");
+            sender.sendMessage("2. prizrakk.admin.setwarn and prizrakk.admin.delwarn");
+            sender.sendMessage("3. prizrakk.admin.delwarn");
+            sender.sendMessage("4. prizrakk.time.night and prizrakk.time.day");
+            sender.sendMessage("5. prizrakk.feed and prizrakk.heal");
+            sender.sendMessage("6. prizrakk.gm");
+            sender.sendMessage("7. prizrakk.help");
+            sender.sendMessage("§2=-=-=-=-=-=-=-=§6PrizrakkPlugin help list§2=-=-=-=-=-=-=-=");
             return;
         }
 
