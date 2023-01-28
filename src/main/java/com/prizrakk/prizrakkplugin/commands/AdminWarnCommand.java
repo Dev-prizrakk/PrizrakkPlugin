@@ -6,8 +6,6 @@ import org.bukkit.command.CommandSender;
 
 public class AdminWarnCommand extends AbstractCommand {
 
-
-
     public AdminWarnCommand() {
         super("admin");
     }
@@ -22,8 +20,8 @@ public class AdminWarnCommand extends AbstractCommand {
         if (args.length == 1){
             if (args[0].equalsIgnoreCase("setwarn")) {
                 sender.sendMessage(PrizrakkPlugin.getInstance().getConfig().getString("message.prefix") + "Soon..");
-                return;
 
+                return;
             }
             if (args[0].equalsIgnoreCase("delwarn")) {
                 sender.sendMessage(PrizrakkPlugin.getInstance().getConfig().getString("message.prefix") + "Soon..");

@@ -5,13 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.prizrakk</groupId>
-    <artifactId>FabulousCraft</artifactId>
+    <artifactId>PrizrakkPlugin</artifactId>
     <version>1</version>
     <packaging>jar</packaging>
 
-    <name>FabulousCraft</name>
+    <name>PrizrakkPlugin</name>
 
-    <description>Плагин для проекта FabulousCraft!</description>
+    <description>Плагин  PrizrakkPlugin!</description>
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
