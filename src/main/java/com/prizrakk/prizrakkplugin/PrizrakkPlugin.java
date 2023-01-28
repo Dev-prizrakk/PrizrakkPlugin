@@ -2,16 +2,19 @@ package com.prizrakk.prizrakkplugin;
 
 import com.prizrakk.prizrakkplugin.commands.*;
 import com.prizrakk.prizrakkplugin.db.Database;
+import com.prizrakk.prizrakkplugin.handler.PlayerEvent;
 import com.prizrakk.prizrakkplugin.handler.PlayerListen;
 import com.prizrakk.prizrakkplugin.handler.ServerPing;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import java.sql.SQLException;
 import java.util.Objects;
 import java.util.logging.Logger;
 
 
-public final class PrizrakkPlugin extends JavaPlugin {
+public final class PrizrakkPlugin extends JavaPlugin implements Listener {
 
     public PrizrakkPlugin() {
     }
@@ -22,8 +25,7 @@ public final class PrizrakkPlugin extends JavaPlugin {
     public void onEnable() {
         instance = this;
         saveDefaultConfig();
-        log.info(ChatColor.GOLD + "Плагин запущен!");
-        log.info(ChatColor.GOLD + "Версия: Pre-Release 1.0");
+        log.info(ChatColor.GOLD + "Version: Pre-Release 1.0");
         try {
             ServerPing.main(null);
         } catch (Exception e) {
@@ -33,7 +35,7 @@ public final class PrizrakkPlugin extends JavaPlugin {
             this.database = new Database(this);
             database.initializeDatabase();
         }catch (SQLException ex) {
-            log.warning(ChatColor.RED + "Ошибка Базы Данных!");
+            log.warning(ChatColor.RED + "Error Database!");
             ex.printStackTrace();
         }
         String mconline = getConfig().getString("config.mconline.enable");
@@ -44,6 +46,7 @@ public final class PrizrakkPlugin extends JavaPlugin {
             log.info("MCONLINE not enabled!");
         }
         getServer().getPluginManager().registerEvents(new PlayerListen(this, database), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerEvent(), this);
 
         getServer().getPluginCommand("heal").setExecutor(new HealCommand(this));
         getServer().getPluginCommand("feed").setExecutor(new FeedCommand(this));

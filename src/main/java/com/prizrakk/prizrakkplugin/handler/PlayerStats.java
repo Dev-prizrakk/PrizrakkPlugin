@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class PlayerStats {
 
-    private String playerUUID;
+    private final String playerUUID;
 
     //random stats on each player
     private final int warn_count;
@@ -30,10 +30,6 @@ public class PlayerStats {
 
     public String getPlayerUUID() {
         return playerUUID;
-    }
-
-    public void setPlayerUUID(String playerUUID) {
-        this.playerUUID = playerUUID;
     }
 
     public int getDeaths() {

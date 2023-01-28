@@ -12,6 +12,9 @@ message:
   offline: "Этот игрок оффлайн"
   day: "Установлено дневное время"
   night: "Установлено ночное время"
+  join: "Игрок %player% зашел на сервер"
+  left: "Игрок %player% вышел с сервера"
+  motd: "A minecraft Server"
 config:
   mconline:
     enable: false
