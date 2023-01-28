@@ -1,6 +1,6 @@
 # PrizrakkPlugin - Pre-release
 
-# ===================  Russia ===================
+# =========  Russia =========
 **Описания**
 ```
 Плагин который будет совмещать в себе множество функций!
@@ -26,7 +26,7 @@
 
 **Server tested** node.prizrakk.xyz:30996
 
-# ===================  English  ===================
+# =========  English  =========
 
 
 # PrizrakkPlugin - Preliminary Release
@@ -55,7 +55,7 @@ A plugin that will combine many functions!
 
 **Server tested** node.prizrakk.xyz:30996
 
-# ===================  Ukraine  ===================
+# =========  Ukraine  =========
 
 # PrizrakkPlugin - попередній реліз
 **Опис**
