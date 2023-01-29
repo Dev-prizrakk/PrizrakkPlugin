@@ -10,11 +10,11 @@ import org.bukkit.ChatColor;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import java.sql.SQLException;
-import java.util.Objects;
 import java.util.logging.Logger;
 
 
 public final class PrizrakkPlugin extends JavaPlugin implements Listener {
+
 
     public PrizrakkPlugin() {
     }
@@ -27,24 +27,13 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
         saveDefaultConfig();
         log.info(ChatColor.GOLD + "Version: Pre-Release 1.0");
         try {
-            ServerPing.main(null);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        try {
             this.database = new Database(this);
             database.initializeDatabase();
         }catch (SQLException ex) {
             log.warning(ChatColor.RED + "Error Database!");
             ex.printStackTrace();
         }
-        String mconline = getConfig().getString("config.mconline.enable");
-        String enable = String.valueOf(true);
-        if (Objects.equals(mconline, enable)) {
-            getServer().getPluginManager().registerEvents(new ServerPing(), this);
-        } else {
-            log.info("MCONLINE not enabled!");
-        }
+        getServer().getPluginManager().registerEvents(new ServerPing(), this);
         getServer().getPluginManager().registerEvents(new PlayerListen(this, database), this);
         Bukkit.getPluginManager().registerEvents(new PlayerEvent(), this);
 
@@ -52,9 +41,10 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
         getServer().getPluginCommand("feed").setExecutor(new FeedCommand(this));
         getServer().getPluginCommand("gm").setExecutor(new gmSurvivalCommand(this));
         getServer().getPluginCommand("day").setExecutor(new DayCommand());
-        getServer().getPluginCommand("night").setExecutor(new NightCommand(this));
+        getServer().getPluginCommand("night").setExecutor(new NightCommand());
         getServer().getPluginCommand("prizrakk").setExecutor(new SystemCommand());
-        getServer().getPluginCommand("admin").setExecutor(new AdminWarnCommand());
+        getServer().getPluginCommand("admin").setExecutor(new AdminWarnCommand(database));
+        getServer().getPluginCommand("stats").setExecutor(new StatsCommand(this, database));
     }
 
 

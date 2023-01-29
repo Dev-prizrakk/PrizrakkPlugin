@@ -25,10 +25,10 @@ public class PlayerListen implements Listener {
 
     public PlayerStats getPlayerStatsFromDatabase(Player player) throws SQLException {
 
-        PlayerStats playerStats = database.findPlayerStatsByUUID(player.getUniqueId().toString());
+        PlayerStats playerStats = database.findPlayerStatsByNICK(player.getName());
 
         if (playerStats == null) {
-            playerStats = new PlayerStats(player.getUniqueId().toString(), 0, 0, 0, 0,0.0, new Date(), new Date());
+            playerStats = new PlayerStats(player.getName(), 0, 0, 0, 0,0.0, new Date(), new Date());
             database.createPlayerStats(playerStats);
         }
 

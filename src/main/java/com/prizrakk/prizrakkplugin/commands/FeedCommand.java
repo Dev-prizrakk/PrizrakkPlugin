@@ -1,6 +1,7 @@
 package com.prizrakk.prizrakkplugin.commands;
 
 import com.prizrakk.prizrakkplugin.PrizrakkPlugin;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -26,10 +27,20 @@ public class FeedCommand implements CommandExecutor {
             return true;
         }
 
-        if (command.getName().equalsIgnoreCase("feed")) {
-            player.setFoodLevel(20);
-            player.sendMessage(plugin.getConfig().getString("message.prefix") + plugin.getConfig().getString("message.feed"));
+        if (command.getName().equalsIgnoreCase("heal")) {
+            if (args.length == 0) {
+                player.setFoodLevel(20);
+                player.sendMessage(plugin.getConfig().getString("message.prefix") + plugin.getConfig().getString("message.feed"));
+            }
+        } else {
+            Player target = Bukkit.getPlayerExact(args[0]);
+            if (target == null) {
+                player.sendMessage(plugin.getConfig().getString("message.offline"));
+            } else {
+                target.setFoodLevel(20);
+                target.sendMessage(plugin.getConfig().getString("message.prefix") + plugin.getConfig().getString("message.feed"));
+            }
         }
-        return true;
+        return false;
     }
 }

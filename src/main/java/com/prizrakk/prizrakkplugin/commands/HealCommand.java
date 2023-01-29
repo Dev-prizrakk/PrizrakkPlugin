@@ -1,6 +1,7 @@
 package com.prizrakk.prizrakkplugin.commands;
 
 import com.prizrakk.prizrakkplugin.PrizrakkPlugin;
+import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -25,43 +26,25 @@ public class HealCommand implements CommandExecutor {
             return true;
         }
         if (command.getName().equalsIgnoreCase("heal")) {
-            double maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
-            player.setHealth(maxHealth);
-            player.setFoodLevel(20);
-            player.sendMessage(plugin.getConfig().getString("message.prefix") + plugin.getConfig().getString("message.health"));
-        }
-        /*
-
-        Тестовая функция скоро заработает)
-
-        if (args.length == 1) {
-            if (args[0].equalsIgnoreCase("@a")) {
-                if (command.getName().equalsIgnoreCase("heal")) {
-                    for (Player pl : Bukkit.getOnlinePlayers()) {
-                        double maxHealth = pl.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
-                        pl.setHealth(maxHealth);
-                        pl.setFoodLevel(20);
-                        pl.sendMessage(plugin.getConfig().getString("message.prefix") + plugin.getConfig().getString("message.health"));
-                    }
-                }
+            if (args.length == 0) {
+                double maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
+                player.setHealth(maxHealth);
+                player.setFoodLevel(20);
+                player.sendMessage(plugin.getConfig().getString("message.prefix") + plugin.getConfig().getString("message.health"));
+            }
             } else {
-                try {
-                    Player s = Bukkit.getPlayer(args[0]);
-                    double maxHealth = s.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
-                    s.setHealth(maxHealth);
-                    s.setFoodLevel(20);
-                    s.sendMessage(plugin.getConfig().getString("message.prefix") + plugin.getConfig().getString("message.health"));
-                } catch (Exception e) {
-                    for (Player pl : Bukkit.getOnlinePlayers()) {
-                        pl.sendMessage(plugin.getConfig().getString("message.prefix") + plugin.getConfig().getString("message.offline"));
-                        player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 10, 1);
-                    }
+
+                Player target = Bukkit.getPlayerExact(args[0]);
+                if (target == null) {
+                    player.sendMessage(plugin.getConfig().getString("message.offline"));
+                } else {
+                    double maxHealth = target.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
+                    target.setHealth(maxHealth);
+                    target.setFoodLevel(20);
+                    target.sendMessage(plugin.getConfig().getString("message.prefix") + plugin.getConfig().getString("message.health"));
                 }
             }
-        }
-
-         */
-        return true;
+        return false;
     }
 }
 

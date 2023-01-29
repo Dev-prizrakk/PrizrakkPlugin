@@ -11,7 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 
-public class gmSurvivalCommand implements CommandExecutor {
+public class  gmSurvivalCommand implements CommandExecutor {
     private final PrizrakkPlugin plugin;
 
     public gmSurvivalCommand(PrizrakkPlugin plugin) {

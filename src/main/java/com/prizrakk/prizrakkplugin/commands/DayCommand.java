@@ -17,9 +17,8 @@ public class DayCommand implements CommandExecutor {
             sender.sendMessage(PrizrakkPlugin.getInstance().getConfig().getString("message.prefix") + PrizrakkPlugin.getInstance().getConfig().getString("message.noconsole"));
             return true;
         }
+
         Player player = (Player) sender;
-        Player p =(Player) sender;
-        World w = p.getWorld();
         World a = Bukkit.getWorld(args[0]);
         if (!player.hasPermission("prizrakk.time.day") || !sender.hasPermission("prizrakk.*")) {
             sender.sendMessage(PrizrakkPlugin.getInstance().getConfig().getString("message.prefix") + PrizrakkPlugin.getInstance().getConfig().getString("message.noperm"));

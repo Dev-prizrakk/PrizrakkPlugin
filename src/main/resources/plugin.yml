@@ -31,3 +31,6 @@ commands:
     description: Команды для администрации
     usage: /<command>
     permission: prizrakk.admin
+  stats:
+    description: Показывает статиску игрока
+    usage: /<command>

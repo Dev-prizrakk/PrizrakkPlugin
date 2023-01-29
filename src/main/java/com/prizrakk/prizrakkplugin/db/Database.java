@@ -30,7 +30,7 @@ public class Database {
 
 
         connection = DriverManager.getConnection(url, user, password);
-        plugin.log.info(ChatColor.GOLD + "Подключения к базе данных успешно произведено!");
+        plugin.log.info(ChatColor.GOLD + "Connections to the database have been successfully made!");
 
         return connection;
     }
@@ -38,16 +38,16 @@ public class Database {
     public void initializeDatabase() throws SQLException{
         Statement statement = getConnection().createStatement();
         //String sql = "CREATE TABLE IF NOT EXISTS player_stats(uuid varchar(36) primary key, deaths int, kills int, blocks_broken long)";
-        String sql = "CREATE TABLE IF NOT EXISTS player_stats (uuid varchar(36) primary key, warn_count int, deaths int, kills int, blocks_broken long, balance double, last_login DATE, last_logout DATE)";
+        String sql = "CREATE TABLE IF NOT EXISTS player_stats (nick varchar(36) primary key, warn_count int, deaths int, kills int, blocks_broken long, balance double, last_login DATE, last_logout DATE)";
         statement.execute(sql);
 
         statement.close();
-        plugin.log.info(ChatColor.GOLD + "База данных успешно импротирована!");
+        plugin.log.info(ChatColor.GOLD + "The database has been imported successfully!");
     }
-    public PlayerStats findPlayerStatsByUUID(String uuid) throws SQLException {
+    public PlayerStats findPlayerStatsByNICK(String nick) throws SQLException {
 
-        PreparedStatement statement = getConnection().prepareStatement("SELECT * FROM player_stats WHERE uuid = ?");
-        statement.setString(1, uuid);
+        PreparedStatement statement = getConnection().prepareStatement("SELECT * FROM player_stats WHERE nick = ?");
+        statement.setString(1, nick);
 
         ResultSet resultSet = statement.executeQuery();
 
@@ -55,7 +55,7 @@ public class Database {
 
         if(resultSet.next()){
 
-            playerStats = new PlayerStats(resultSet.getString("uuid"), resultSet.getInt("warn_count"), resultSet.getInt("deaths"), resultSet.getInt("kills"), resultSet.getLong("blocks_broken"), resultSet.getDouble("balance"), resultSet.getDate("last_login"), resultSet.getDate("last_logout"));
+            playerStats = new PlayerStats(resultSet.getString("nick"), resultSet.getInt("warn_count"), resultSet.getInt("deaths"), resultSet.getInt("kills"), resultSet.getLong("blocks_broken"), resultSet.getDouble("balance"), resultSet.getDate("last_login"), resultSet.getDate("last_logout"));
 
             statement.close();
 
@@ -70,8 +70,8 @@ public class Database {
     public void createPlayerStats(PlayerStats playerStats) throws SQLException {
 
         PreparedStatement statement = getConnection()
-                .prepareStatement("INSERT INTO player_stats(uuid, warn_count, deaths, kills, blocks_broken, balance, last_login, last_logout) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-        statement.setString(1, playerStats.getPlayerUUID());
+                .prepareStatement("INSERT INTO player_stats(nick, warn_count, deaths, kills, blocks_broken, balance, last_login, last_logout) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        statement.setString(1, playerStats.getPlayerNick());
         statement.setInt(2, playerStats.getWarn_count());
         statement.setInt(3, playerStats.getDeaths());
         statement.setInt(4, playerStats.getKills());
@@ -88,7 +88,7 @@ public class Database {
 
     public void updatePlayerStats(PlayerStats playerStats) throws SQLException {
 
-        PreparedStatement statement = getConnection().prepareStatement("UPDATE player_stats SET warn_count = ?, deaths = ?, kills = ?, blocks_broken = ?, balance = ?, last_login = ?, last_logout = ? WHERE uuid = ?");
+        PreparedStatement statement = getConnection().prepareStatement("UPDATE player_stats SET warn_count = ?, deaths = ?, kills = ?, blocks_broken = ?, balance = ?, last_login = ?, last_logout = ? WHERE nick = ?");
         statement.setInt(1, playerStats.getWarn_count());
         statement.setInt(2, playerStats.getDeaths());
         statement.setInt(3, playerStats.getKills());
@@ -96,12 +96,11 @@ public class Database {
         statement.setDouble(5, playerStats.getBalance());
         statement.setDate(6, new Date(playerStats.getLastLogin().getTime()));
         statement.setDate(7, new Date(playerStats.getLastLogout().getTime()));
-        statement.setString(8, playerStats.getPlayerUUID());
+        statement.setString(8, playerStats.getPlayerNick());
 
         statement.executeUpdate();
 
         statement.close();
 
     }
-
 }

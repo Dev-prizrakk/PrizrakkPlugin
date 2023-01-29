@@ -4,6 +4,7 @@ import com.prizrakk.prizrakkplugin.PrizrakkPlugin;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
+
 public class SystemCommand extends AbstractCommand {
 
 
@@ -11,6 +12,8 @@ public class SystemCommand extends AbstractCommand {
     public SystemCommand() {
         super("prizrakk");
     }
+
+
     @Override
     public void execute(CommandSender sender, String label, String[] args) {
         if (args.length == 0) {
@@ -56,7 +59,6 @@ public class SystemCommand extends AbstractCommand {
             sender.sendMessage("§2=-=-=-=-=-=-=-=§6PrizrakkPlugin help list§2=-=-=-=-=-=-=-=");
             return;
         }
-
 
         sender.sendMessage(PrizrakkPlugin.getInstance().getConfig().getString("message.prefix") + ChatColor.RED + "Неизвестная подкоманда: " + args[0]);
     }

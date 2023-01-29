@@ -1,5 +1,7 @@
 package com.prizrakk.prizrakkplugin.handler;
 
+
+import com.prizrakk.prizrakkplugin.PrizrakkPlugin;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 import org.bukkit.Bukkit;
@@ -15,11 +17,9 @@ public class ServerPing implements Listener {
     /*
         Данный класс пока не буду переписывать на него у меня большие планы!
          */
-    public ServerPing() {
-    }
-    public static int portbind = 11222;
+
     public static void main(String[] args) throws Exception {
-        HttpServer server = HttpServer.create(new InetSocketAddress(portbind), 0);
+        HttpServer server = HttpServer.create(new InetSocketAddress(PrizrakkPlugin.getInstance().getConfig().getInt("config.mconline.port-bind")), 0);
         server.createContext("/mconline/", (exchange) -> {
             StringBuilder resp_text = new StringBuilder("[");
             Iterator<? extends Player> var3 = Bukkit.getOnlinePlayers().iterator();

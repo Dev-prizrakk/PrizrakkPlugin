@@ -4,10 +4,10 @@ import java.util.Date;
 
 public class PlayerStats {
 
-    private final String playerUUID;
+    private final String playerNick;
 
     //random stats on each player
-    private final int warn_count;
+    private int warn_count;
     private int deaths;
     private int kills;
     private long blocksBroken;
@@ -17,8 +17,8 @@ public class PlayerStats {
     private Date lastLogin;
     private Date lastLogout;
 
-    public PlayerStats(String playerUUID, int warn_count, int deaths, int kills, long blocksBroken, double balance, Date lastLogin, Date lastLogout) {
-        this.playerUUID = playerUUID;
+    public PlayerStats(String playerNick, int warn_count, int deaths, int kills, long blocksBroken, double balance, Date lastLogin, Date lastLogout) {
+        this.playerNick = playerNick;
         this.deaths = deaths;
         this.kills = kills;
         this.blocksBroken = blocksBroken;
@@ -26,10 +26,11 @@ public class PlayerStats {
         this.lastLogin = lastLogin;
         this.lastLogout = lastLogout;
         this.warn_count = warn_count;
+
     }
 
-    public String getPlayerUUID() {
-        return playerUUID;
+    public String getPlayerNick() {
+        return playerNick;
     }
 
     public int getDeaths() {
@@ -37,6 +38,9 @@ public class PlayerStats {
     }
     public int getWarn_count() {
         return warn_count;
+    }
+    public void setWarn_count(int warn_count) {
+        this.warn_count = warn_count;
     }
 
     public void setDeaths(int deaths) {
@@ -82,4 +86,5 @@ public class PlayerStats {
     public void setLastLogout(Date lastLogout) {
         this.lastLogout = lastLogout;
     }
+
 }
