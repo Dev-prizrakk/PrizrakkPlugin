@@ -5,10 +5,12 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.*;
+import org.bukkit.event.Listener;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
+public abstract class AbstractCommand implements CommandExecutor, TabCompleter, Listener {
 
     public AbstractCommand(String command) {
         PluginCommand pluginCommand = PrizrakkPlugin.getInstance().getCommand(command);

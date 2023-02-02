@@ -9,6 +9,7 @@
     <version>1</version>
     <packaging>jar</packaging>
 
+
     <name>PrizrakkPlugin</name>
 
     <description>Плагин  PrizrakkPlugin!</description>
@@ -72,4 +73,5 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
+
 </project>

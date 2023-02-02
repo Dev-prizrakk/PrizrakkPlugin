@@ -4,6 +4,7 @@ import com.prizrakk.prizrakkplugin.PrizrakkPlugin;
 import com.prizrakk.prizrakkplugin.db.Database;
 import com.prizrakk.prizrakkplugin.handler.PlayerStats;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -14,12 +15,10 @@ import java.util.Date;
 
 public class StatsCommand implements CommandExecutor {
 
-    private final PrizrakkPlugin plugin;
     private final Database database;
 
-    public StatsCommand(PrizrakkPlugin plugin, Database database) {
+    public StatsCommand(Database database) {
         this.database = database;
-        this.plugin = plugin;
     }
 
 
@@ -38,6 +37,7 @@ public class StatsCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        String offline = ChatColor.translateAlternateColorCodes('&', PrizrakkPlugin.getInstance().getConfig().getString("message.system.offline"));
         Player player = (Player) sender;
         if (command.getName().equalsIgnoreCase("stats")) {
             if (args.length == 0) {
@@ -59,13 +59,12 @@ public class StatsCommand implements CommandExecutor {
                         + "\n" + "§2Сломано блоков: §e" + block
                         + "\n" + "§2Убито игроков: §e" + kills
                         + "\n" + "§2Смертей: §e" + death
-                        + "\n" +"§2Получено предупреждений: §e" + warn
+                        + "\n" + "§2Получено предупреждений: §e" + warn
                         + "\n" + "§2Баланс: §e" + balance);
             } else {
                 Player target = Bukkit.getPlayerExact(args[0]);
                 if (target == null) {
-
-                    player.sendMessage(plugin.getConfig().getString("message.offline"));
+                    player.sendMessage(offline);
                 } else {
                     PlayerStats playerStats;
                     try {
@@ -79,13 +78,17 @@ public class StatsCommand implements CommandExecutor {
                     int kills = playerStats.getKills();
                     int warn = playerStats.getWarn_count();
                     String nick = playerStats.getPlayerNick();
+                    Date last_login = playerStats.getLastLogin();
+                    Date last_logout = playerStats.getLastLogout();
                     sender.sendMessage("§a====== §6Статистика игрока §3" + nick + " §a=====");
                     sender.sendMessage("§2Ник: §e" + nick
                             + "\n" + "§2Сломано блоков: §e" + block
                             + "\n" + "§2Убито игроков: §e" + kills
                             + "\n" + "§2Смертей: §e" + death
                             + "\n" +"§2Получено предупреждений: §e" + warn
-                            + "\n" + "§2Баланс: §e" + balance);
+                            + "\n" + "§2Баланс: §e" + balance
+                            + "\n" + "§2Последний вход: §e" + last_login
+                            + "\n" + "§2Последний выход: §e" + last_logout);
                 }
             }
         }

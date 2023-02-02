@@ -13,10 +13,12 @@ import java.util.Date;
 
 public class AdminWarnCommand extends AbstractCommand {
 
-    public AdminWarnCommand(Database database) {
+    public AdminWarnCommand(Database database, PrizrakkPlugin plugin) {
         super("admin");
         this.database = database;
+        this.plugin = plugin;
     }
+    private final PrizrakkPlugin plugin;
     private final Database database;
 
     public PlayerStats getPlayerStatsFromDatabase(Player player) throws SQLException {
@@ -31,23 +33,33 @@ public class AdminWarnCommand extends AbstractCommand {
         return playerStats;
     }
 
-
     @Override
     public void execute(CommandSender sender, String label, String[] args) {
-        if (args.length == 0) {
-            sender.sendMessage(PrizrakkPlugin.getInstance().getConfig().getString("message.prefix") + ChatColor.RED + "/prizrakk help");
+
+        String prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("message.system.prefix"));
+        String error = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("message.system.error"));
+        String noperm = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("message.system.noperm"));
+        String delwarnview = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("message.admin.delwarnview"));
+        String offline = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("message.system.offline"));
+
+
+        Player player = (Player) sender;
+        if (!player.hasPermission("prizrakk.admin") || !sender.hasPermission("prizrakk.*")) {
+            sender.sendMessage(prefix + noperm);
             return;
         }
-        Player player = (Player) sender;
+
+        if (args.length == 0) {
+            sender.sendMessage(prefix + ChatColor.RED + "/prizrakk help");
+            return;
+        }
         if (args[0].equalsIgnoreCase("addwarn")) {
             if (args.length == 1) {
-                sender.sendMessage(PrizrakkPlugin.getInstance().getConfig().getString("message.error"));
-
+                sender.sendMessage(prefix + error);
             } else {
                 Player target = Bukkit.getPlayerExact(args[1]);
                 if (target == null) {
-
-                    player.sendMessage(PrizrakkPlugin.getInstance().getConfig().getString("message.offline"));
+                    player.sendMessage(prefix + offline);
                 } else {
                     try {
                         PlayerStats playerStats = getPlayerStatsFromDatabase(target);
@@ -57,24 +69,21 @@ public class AdminWarnCommand extends AbstractCommand {
                         e1.printStackTrace();
                         PrizrakkPlugin.getInstance().getLogger().warning("Could not update player stats after block break.");
                     }
-                    sender.sendMessage(PrizrakkPlugin.getInstance().getConfig().getString("message.addwarn") + target.getName());
-
-                    String message = PrizrakkPlugin.getInstance().getConfig().getString("message.add-warn-view");
-                    message = message.replace("%admin%", player.getName());
-                    String remessage1 = ChatColor.translateAlternateColorCodes('&', message);
-                    target.sendMessage(PrizrakkPlugin.getInstance().getConfig().getString("message.prefix") + remessage1);
+                    String addwarn =  ChatColor.translateAlternateColorCodes('&',plugin.getConfig().getString("message.admin.addwarn")).replace("%player%", target.getName());
+                    String addwarnview = ChatColor.translateAlternateColorCodes('&',plugin.getConfig().getString("message.admin.addwarnview")).replace("%admin%", sender.getName());
+                    sender.sendMessage(prefix + addwarn);
+                    target.sendMessage(prefix + addwarnview);
                 }
             }
             return;
         }
         if (args[0].equalsIgnoreCase("delwarn")) {
             if (args.length == 1) {
-                sender.sendMessage(PrizrakkPlugin.getInstance().getConfig().getString("message.error"));
-
+                sender.sendMessage(prefix + error);
             } else {
                 Player target = Bukkit.getPlayerExact(args[1]);
                 if (target == null) {
-                    player.sendMessage(PrizrakkPlugin.getInstance().getConfig().getString("message.offline"));
+                    player.sendMessage(prefix + offline);
                 } else {
                     try {
                         PlayerStats playerStats = getPlayerStatsFromDatabase(target);
@@ -84,18 +93,13 @@ public class AdminWarnCommand extends AbstractCommand {
                         e1.printStackTrace();
                         PrizrakkPlugin.getInstance().getLogger().warning("Could not update player stats after block break.");
                     }
-                    sender.sendMessage(PrizrakkPlugin.getInstance().getConfig().getString("message.delwarn") + target.getName());
-
-                    String message = PrizrakkPlugin.getInstance().getConfig().getString("message.del-warn-view");
-                    message = message.replace("%admin%", player.getName());
-                    String remessage = ChatColor.translateAlternateColorCodes('&', message);
-
-                    target.sendMessage(PrizrakkPlugin.getInstance().getConfig().getString("message.prefix") + remessage);
+                    sender.sendMessage(prefix + ChatColor.translateAlternateColorCodes('&',plugin.getConfig().getString("message.admin.delwarn")).replace("%player%", target.getName()));
+                    target.sendMessage(prefix + delwarnview);
                 }
             }
             return;
         }
+        sender.sendMessage(prefix + ChatColor.RED + "Неизвестная подкоманда: " + args[0]);
 
-        sender.sendMessage(PrizrakkPlugin.getInstance().getConfig().getString("message.prefix") + ChatColor.RED + "Неизвестная подкоманда: " + args[0]);
     }
 }
