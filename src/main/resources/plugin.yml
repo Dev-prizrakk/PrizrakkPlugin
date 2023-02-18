@@ -21,6 +21,9 @@ commands:
     description: Востоналивает голод
     usage: /<command>
     permission: prizrakk.feed
+  god:
+    description: GodMode? чего? тоесть я смогу танцевать перед зомби и мне ничего не будет??
+    usage: /<command>
   gm:
     description: Изменяет режим
     usage: /<command> 0,1,2,3
@@ -34,3 +37,6 @@ commands:
   stats:
     description: Показывает статиску игрока
     usage: /<command>
+  shop:
+    description: ШопГуй 2023
+    usage: /<command> open

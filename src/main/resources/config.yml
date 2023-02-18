@@ -24,8 +24,8 @@ message:
     night: "Установлено ночное время"
   # Вход и выход
   event:
-    join: "Игрок %player% зашел на сервер"
-    left: "Игрок %player% вышел с сервера"
+    join: "%prefix% %player% зашел на сервер"
+    left: "%prefix% %player% вышел с сервера"
 
   # Прочее
   other:
@@ -37,11 +37,14 @@ message:
   # не реализовано
   success: "Поздравляю вы забрали свой подарок за отыграное время!"
 config:
-  time-reward: 3000 //В тиках
-  reward-item: diamond //писать как и пишет в /itemdb для 100% результата
-  reward-count: 1
+  enable: true
+  debug: false
   warncount: 3
   mysql:
     user: "user"
     password: "querty123"
     url: "jdbc:mysql://127.0.0.1:3306/PluginDataBase?autoReconnect=true"
+  discord:
+    token: ""
+    chat: ""
+    console: ""

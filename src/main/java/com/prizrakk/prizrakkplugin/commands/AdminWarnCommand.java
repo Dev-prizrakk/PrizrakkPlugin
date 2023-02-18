@@ -26,7 +26,7 @@ public class AdminWarnCommand extends AbstractCommand {
         PlayerStats playerStats = database.findPlayerStatsByNICK(player.getName());
 
         if (playerStats == null) {
-            playerStats = new PlayerStats(player.getName(), 0, 0, 0, 0,0.0, new Date(), new Date());
+            playerStats = new PlayerStats(player.getName(), 0, "Житель",0, 0, 0,0.0, new Date(), new Date());
             database.createPlayerStats(playerStats);
         }
 
@@ -65,8 +65,14 @@ public class AdminWarnCommand extends AbstractCommand {
                         PlayerStats playerStats = getPlayerStatsFromDatabase(target);
                         playerStats.setWarn_count(playerStats.getWarn_count() + 1);
                         database.updatePlayerStats(playerStats);
+                        int warncount = playerStats.getWarn_count();
+                        if (warncount == plugin.getConfig().getInt("config.warncount")) {
+                            target.kickPlayer(ChatColor.translateAlternateColorCodes('&', PrizrakkPlugin.getInstance().getConfig().getString("message.reason.warncount")).replace("%warncount%", plugin.getConfig().getString("config.warncount")));
+                        }
                     } catch (SQLException e1) {
-                        e1.printStackTrace();
+                        if (plugin.getConfig().getBoolean("config.debug") == true) {
+                            e1.printStackTrace();
+                        }
                         PrizrakkPlugin.getInstance().getLogger().warning("Could not update player stats after block break.");
                     }
                     String addwarn =  ChatColor.translateAlternateColorCodes('&',plugin.getConfig().getString("message.admin.addwarn")).replace("%player%", target.getName());
@@ -90,7 +96,9 @@ public class AdminWarnCommand extends AbstractCommand {
                         playerStats.setWarn_count(playerStats.getWarn_count() - 1);
                         database.updatePlayerStats(playerStats);
                     } catch (SQLException e1) {
-                        e1.printStackTrace();
+                        if (plugin.getConfig().getBoolean("config.debug") == true) {
+                            e1.printStackTrace();
+                        }
                         PrizrakkPlugin.getInstance().getLogger().warning("Could not update player stats after block break.");
                     }
                     sender.sendMessage(prefix + ChatColor.translateAlternateColorCodes('&',plugin.getConfig().getString("message.admin.delwarn")).replace("%player%", target.getName()));

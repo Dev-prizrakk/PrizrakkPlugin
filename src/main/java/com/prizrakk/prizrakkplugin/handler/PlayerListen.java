@@ -28,7 +28,7 @@ public class PlayerListen implements Listener {
         PlayerStats playerStats = database.findPlayerStatsByNICK(player.getName());
 
         if (playerStats == null) {
-            playerStats = new PlayerStats(player.getName(), 0, 0, 0, 0,0.0, new Date(), new Date());
+            playerStats = new PlayerStats(player.getName(), 0, "Житель", 0, 0, 0,0.0, new Date(), new Date());
             database.createPlayerStats(playerStats);
         }
 
@@ -44,8 +44,11 @@ public class PlayerListen implements Listener {
             playerStats.setLastLogin(new Date());
             database.updatePlayerStats(playerStats);
         }catch (SQLException e){
-            e.printStackTrace();
+            if (plugin.getConfig().getBoolean("config.debug") == true) {
+                    e.printStackTrace();
+            }
             plugin.getLogger().warning("Could not update player stats after join.");
+
         }
 
     }
@@ -59,7 +62,9 @@ public class PlayerListen implements Listener {
             playerStats.setLastLogout(new Date());
             database.updatePlayerStats(playerStats);
         }catch (SQLException e1){
-            e1.printStackTrace();
+            if (plugin.getConfig().getBoolean("config.debug") == true) {
+                e1.printStackTrace();
+            }
             plugin.getLogger().warning("Could not update player stats after quit.");
         }
 
@@ -76,7 +81,9 @@ public class PlayerListen implements Listener {
             playerStats.setBalance(playerStats.getBalance() + 0.50);
             database.updatePlayerStats(playerStats);
         } catch (SQLException e1) {
-            e1.printStackTrace();
+            if (plugin.getConfig().getBoolean("config.debug") == true) {
+                e1.printStackTrace();
+            }
             plugin.getLogger().warning("Could not update player stats after block break.");
         }
 
@@ -106,7 +113,9 @@ public class PlayerListen implements Listener {
             database.updatePlayerStats(pStats);
 
         }catch (SQLException e1){
-            e1.printStackTrace();
+            if (plugin.getConfig().getBoolean("config.debug") == true) {
+                e1.printStackTrace();
+            }
             plugin.getLogger().warning("Could not update player stats after death.");
         }
 

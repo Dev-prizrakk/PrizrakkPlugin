@@ -27,7 +27,7 @@ public class StatsCommand implements CommandExecutor {
         PlayerStats playerStats = database.findPlayerStatsByNICK(player.getName());
 
         if (playerStats == null) {
-            playerStats = new PlayerStats(player.getName(), 0, 0, 0, 0,0.0, new Date(), new Date());
+            playerStats = new PlayerStats(player.getName(), 0, "Житель",0, 0, 0,0.0, new Date(), new Date());
             database.createPlayerStats(playerStats);
         }
 
@@ -85,10 +85,14 @@ public class StatsCommand implements CommandExecutor {
                             + "\n" + "§2Сломано блоков: §e" + block
                             + "\n" + "§2Убито игроков: §e" + kills
                             + "\n" + "§2Смертей: §e" + death
-                            + "\n" +"§2Получено предупреждений: §e" + warn
+                            + "\n" + "§2Получено предупреждений: §e" + warn
                             + "\n" + "§2Баланс: §e" + balance
                             + "\n" + "§2Последний вход: §e" + last_login
-                            + "\n" + "§2Последний выход: §e" + last_logout);
+                            + "\n" + "§2Последний выход: §e" + last_logout
+                            + "\n" + "§2Здоровье игрка: §e" + target.getHealth());
+                    if (sender.hasPermission("prizrakk.admin")) {
+                        sender.sendMessage("§2Ip адресс: §e" + target.getAddress());
+                    }
                 }
             }
         }

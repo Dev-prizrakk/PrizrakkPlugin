@@ -38,7 +38,7 @@ public class SystemCommand extends AbstractCommand {
         }
         if (args[0].equalsIgnoreCase("help")) {
             sender.sendMessage("§a=-=-=-=-=-=-=-= §6PrizrakkPlugin help list §a=-=-=-=-=-=-=-="
-                    + "\n" + "                     §6Plugin Version: §5" + version
+                    + "\n" + "                       §6Plugin Version: §5" + version
                     + "\n" + "         §eSupport Server: §6https://discord.gg/U6H9Zw7Fhg      "
                     + "\n" + " "
                     + "\n" + "§91. §2/prizrakk reload §9-§b Перезапускает плагин! §4(prizrakk.reload)"
