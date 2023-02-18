@@ -34,7 +34,7 @@ public class ChatMessage implements Listener {
     }
 
     @EventHandler
-    public void ChatMeneger(AsyncPlayerChatEvent event, MessageCreateEvent devent) {
+    public void ChatMeneger(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
         PlayerStats playerStats;
         try {
@@ -44,7 +44,6 @@ public class ChatMessage implements Listener {
         }
         //sendMessage(player.getName() + event.getMessage());
         event.setFormat(playerStats.getPrefix() + " " + player.getName() + " §6>>§f " + event.getMessage());
-        devent.getChannel().sendMessage(player.getName() + " >> " + event.getMessage());
     }
 
 }

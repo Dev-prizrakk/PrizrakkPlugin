@@ -45,6 +45,7 @@ config:
     password: "querty123"
     url: "jdbc:mysql://127.0.0.1:3306/PluginDataBase?autoReconnect=true"
   discord:
+    enable: false
     token: ""
     chat: ""
     console: ""

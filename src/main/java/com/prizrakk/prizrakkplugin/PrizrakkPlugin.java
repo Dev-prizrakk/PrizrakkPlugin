@@ -66,16 +66,18 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
         getServer().getPluginCommand("stats").setExecutor(new StatsCommand(database));
         getServer().getPluginCommand("god").setExecutor(new GodCommand());
 
-        new DiscordApiBuilder()
-                .setToken(getConfig().getString("config.discord.token")) // Set the token of the bot here
-                .login() // Log the bot in
-                .thenAccept(this::onConnectToDiscord) // Call #onConnectToDiscord(...) after a successful login
-                .exceptionally(error -> {
-                    // Log a warning when the login to Discord failed (wrong token?)
-                    getLogger().warning("Failed to connect to Discord! Disabling plugin!");
-                    getPluginLoader().disablePlugin(this);
-                    return null;
-                });
+        if (getConfig().getBoolean("config.discord.enable") == true) {
+            new DiscordApiBuilder()
+                    .setToken(getConfig().getString("config.discord.token")) // Set the token of the bot here
+                    .login() // Log the bot in
+                    .thenAccept(this::onConnectToDiscord) // Call #onConnectToDiscord(...) after a successful login
+                    .exceptionally(error -> {
+                        // Log a warning when the login to Discord failed (wrong token?)
+                        getLogger().warning("Failed to connect to Discord! Disabling plugin!");
+                        getPluginLoader().disablePlugin(this);
+                        return null;
+                    });
+        }
         if (getConfig().getBoolean("config.enable") == false) {
             getLogger().warning(ChatColor.RED + "Плагин отключен в конфигурациях!");
             getPluginLoader().disablePlugin(this);
