@@ -1,0 +1,51 @@
+# § для использования цветов
+# Версия конфигиа 0.3
+message:
+  # Системное
+  consolemessage:
+  system:
+    prefix: "§6[§4PrizrakkPlugin§6] §f"
+    noperm: "У вас не прав на эту команду!"
+    reload: "Плагин перезапущен!"
+    noconsole: "Команда доступна только игроку!"
+    offline: "Этот игрок оффлайн"
+    error: "Произошла ошибка при выполнение команды!"
+  # Варны
+  admin:
+    addwarn: "Вы успешно выдали варн игроку: %player%"
+    delwarn: "Вы успешно удалили варн игроку: %player%"
+    addwarnview: "Вы получили варн! от Администратора %admin% !"
+    delwarnview: "Вам сняли варн! Ведите себя хорошо!"
+  reason:
+    warncount: "Вы были кикнуты т.к у вас допущено более %warncount% варнов"
+  # Сменя дня и ночи
+  time:
+    day: "Установлено дневное время"
+    night: "Установлено ночное время"
+  # Вход и выход
+  event:
+    join: "%prefix% %player% зашел на сервер"
+    left: "%prefix% %player% вышел с сервера"
+
+  # Прочее
+  other:
+    health: "Вы исцелены!"
+    healed: "Вы исцелили: {player}"
+    feed: "Вы были покормлены!"
+    feeded: "Вы покормили: {player}"
+    gm: "Ваш игровой режим изменился на"
+  # не реализовано
+  success: "Поздравляю вы забрали свой подарок за отыграное время!"
+config:
+  enable: true
+  debug: false
+  warncount: 3
+  mysql:
+    user: "user"
+    password: "querty123"
+    url: "jdbc:mysql://127.0.0.1:3306/PluginDataBase?autoReconnect=true"
+  discord:
+    enable: false
+    token: ""
+    chat: ""
+    console: ""
