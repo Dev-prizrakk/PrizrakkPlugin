@@ -1,6 +1,6 @@
 package com.prizrakk.prizrakkplugin.commands;
 
-import com.prizrakk.prizrakkplugin.PrizrakkPlugin;
+import com.prizrakk.prizrakkplugin.config.MessageConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
@@ -14,10 +14,10 @@ public class DayCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        String prefix = ChatColor.translateAlternateColorCodes('&', PrizrakkPlugin.getInstance().getConfig().getString("message.system.prefix"));
-        String day = ChatColor.translateAlternateColorCodes('&', PrizrakkPlugin.getInstance().getConfig().getString("message.time.day"));
-        String noconsole = ChatColor.translateAlternateColorCodes('&', PrizrakkPlugin.getInstance().getConfig().getString("message.system.noconsole"));
-        String noperm = ChatColor.translateAlternateColorCodes('&', PrizrakkPlugin.getInstance().getConfig().getString("message.system.noperm"));
+        String prefix = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.prefix"));
+        String day = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.time.day"));
+        String noconsole = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.noconsole"));
+        String noperm = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.noperm"));
 
         if (!(sender instanceof Player)) {
             sender.sendMessage(prefix + noconsole);

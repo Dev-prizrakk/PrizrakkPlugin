@@ -40,3 +40,6 @@ commands:
   shop:
     description: ШопГуй 2023
     usage: /<command> open
+  bc:
+    description: Надо значит надо
+    usage: /<command> <message>

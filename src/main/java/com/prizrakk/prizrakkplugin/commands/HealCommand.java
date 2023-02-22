@@ -1,6 +1,7 @@
 package com.prizrakk.prizrakkplugin.commands;
 
 import com.prizrakk.prizrakkplugin.PrizrakkPlugin;
+import com.prizrakk.prizrakkplugin.config.MessageConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
@@ -12,11 +13,11 @@ import org.bukkit.entity.Player;
 public class HealCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        String prefix = ChatColor.translateAlternateColorCodes('&', PrizrakkPlugin.getInstance().getConfig().getString("message.system.prefix"));
-        String noperm = ChatColor.translateAlternateColorCodes('&', PrizrakkPlugin.getInstance().getConfig().getString("message.system.noperm"));
-        String noconsole = ChatColor.translateAlternateColorCodes('&', PrizrakkPlugin.getInstance().getConfig().getString("message.system.noconsole"));
-        String offline = ChatColor.translateAlternateColorCodes('&', PrizrakkPlugin.getInstance().getConfig().getString("message.system.offline"));
-        String health = ChatColor.translateAlternateColorCodes('&', PrizrakkPlugin.getInstance().getConfig().getString("message.other.health"));
+        String prefix = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.prefix"));
+        String noperm = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.noperm"));
+        String noconsole = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.noconsole"));
+        String offline = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.offline"));
+        String health = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.other.health"));
 
         if (!(sender instanceof Player)) {
             sender.sendMessage(prefix + noconsole);

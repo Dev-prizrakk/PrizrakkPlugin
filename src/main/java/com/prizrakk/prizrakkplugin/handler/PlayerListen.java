@@ -28,7 +28,7 @@ public class PlayerListen implements Listener {
         PlayerStats playerStats = database.findPlayerStatsByNICK(player.getName());
 
         if (playerStats == null) {
-            playerStats = new PlayerStats(player.getName(), 0, "Житель", 0, 0, 0,0.0, new Date(), new Date());
+            playerStats = new PlayerStats(player.getName(), 0, "Житель", 0,0, 0, 0,0.0, new Date(), new Date());
             database.createPlayerStats(playerStats);
         }
 

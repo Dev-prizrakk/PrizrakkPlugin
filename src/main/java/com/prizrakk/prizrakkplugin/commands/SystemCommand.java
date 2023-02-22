@@ -1,25 +1,27 @@
 package com.prizrakk.prizrakkplugin.commands;
 
 import com.prizrakk.prizrakkplugin.PrizrakkPlugin;
+import com.prizrakk.prizrakkplugin.config.MessageConfig;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 
 public class SystemCommand extends AbstractCommand {
 
-
-
-    public SystemCommand() {
+    public SystemCommand(PrizrakkPlugin plugin) {
         super("prizrakk");
+        this.plugin = plugin;
     }
+    private final PrizrakkPlugin plugin;
 
 
     @Override
     public void execute(CommandSender sender, String label, String[] args) {
-        double version = 1.2;
-        String prefix = ChatColor.translateAlternateColorCodes('&', PrizrakkPlugin.getInstance().getConfig().getString("message.system.prefix"));
-        String noperm = ChatColor.translateAlternateColorCodes('&', PrizrakkPlugin.getInstance().getConfig().getString("message.system.noperm"));
-        String reload = ChatColor.translateAlternateColorCodes('&', PrizrakkPlugin.getInstance().getConfig().getString("message.system.reload"));
+        String prefix = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.prefix"));
+        String noperm = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.noperm"));
+        String reload = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.reload"));
         if (args.length == 0) {
 
             sender.sendMessage(prefix + ChatColor.RED + "/prizrakk help");
@@ -31,14 +33,14 @@ public class SystemCommand extends AbstractCommand {
                 sender.sendMessage(prefix + noperm);
                 return;
             }
-            //Player player = (Player) sender;
             PrizrakkPlugin.getInstance().reloadConfig();
+            //MessageConfig.reload();
             sender.sendMessage(prefix + reload);
             return;
         }
         if (args[0].equalsIgnoreCase("help")) {
             sender.sendMessage("§a=-=-=-=-=-=-=-= §6PrizrakkPlugin help list §a=-=-=-=-=-=-=-="
-                    + "\n" + "                       §6Plugin Version: §5" + version
+                    + "\n" + "                       §6Plugin Version: §5" + Bukkit.getVersion()
                     + "\n" + "         §eSupport Server: §6https://discord.gg/U6H9Zw7Fhg      "
                     + "\n" + " "
                     + "\n" + "§91. §2/prizrakk reload §9-§b Перезапускает плагин! §4(prizrakk.reload)"
@@ -51,6 +53,12 @@ public class SystemCommand extends AbstractCommand {
                     + "\n" + "§98. §2/day world §9-§b устанавливает дневное время! §4(prizrakk.time.day)"
                     + "\n" + "§99. §2/night world §9-§b устанавливает ночное время суток! §4(prizrakk.time.night)"
                     + "\n" + "§a=-=-=-=-=-=-=-= §6PrizrakkPlugin help list §a=-=-=-=-=-=-=-=");
+            if (!(sender instanceof Player)) {
+                return;
+            } else {
+                Player player = (Player) sender;
+                plugin.getLogger().info(prefix + " >> " + player.getName() + "used: /prizrakk help");
+            }
             return;
         }
 

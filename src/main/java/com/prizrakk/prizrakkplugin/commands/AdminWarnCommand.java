@@ -1,6 +1,7 @@
 package com.prizrakk.prizrakkplugin.commands;
 
 import com.prizrakk.prizrakkplugin.PrizrakkPlugin;
+import com.prizrakk.prizrakkplugin.config.MessageConfig;
 import com.prizrakk.prizrakkplugin.db.Database;
 import com.prizrakk.prizrakkplugin.handler.PlayerStats;
 import org.bukkit.Bukkit;
@@ -26,7 +27,7 @@ public class AdminWarnCommand extends AbstractCommand {
         PlayerStats playerStats = database.findPlayerStatsByNICK(player.getName());
 
         if (playerStats == null) {
-            playerStats = new PlayerStats(player.getName(), 0, "Житель",0, 0, 0,0.0, new Date(), new Date());
+            playerStats = new PlayerStats(player.getName(), 0, "Житель",0, 0, 0, 0,0.0, new Date(), new Date());
             database.createPlayerStats(playerStats);
         }
 
@@ -36,11 +37,11 @@ public class AdminWarnCommand extends AbstractCommand {
     @Override
     public void execute(CommandSender sender, String label, String[] args) {
 
-        String prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("message.system.prefix"));
-        String error = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("message.system.error"));
-        String noperm = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("message.system.noperm"));
-        String delwarnview = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("message.admin.delwarnview"));
-        String offline = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("message.system.offline"));
+        String prefix = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.prefix"));
+        String error = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.error"));
+        String noperm = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.noperm"));
+        String delwarnview = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.admin.delwarnview"));
+        String offline = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.offline"));
 
 
         Player player = (Player) sender;

@@ -8,12 +8,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.javacord.api.event.message.MessageCreateEvent;
+import org.javacord.api.listener.GloballyAttachableListener;
+import org.javacord.api.listener.message.MessageCreateListener;
 
 import java.sql.SQLException;
 import java.util.Date;
 
 
-public class ChatMessage implements Listener {
+public class ChatMessage implements Listener, GloballyAttachableListener {
     public ChatMessage(Database database, PrizrakkPlugin plugin) {
         this.database = database;
         this.plugin = plugin;
@@ -26,7 +28,7 @@ public class ChatMessage implements Listener {
         PlayerStats playerStats = database.findPlayerStatsByNICK(player.getName());
 
         if (playerStats == null) {
-            playerStats = new PlayerStats(player.getName(), 0, "Житель",0, 0, 0,0.0, new Date(), new Date());
+            playerStats = new PlayerStats(player.getName(), 0, "Житель", 0,0, 0, 0,0.0, new Date(), new Date());
             database.createPlayerStats(playerStats);
         }
 
@@ -45,5 +47,4 @@ public class ChatMessage implements Listener {
         //sendMessage(player.getName() + event.getMessage());
         event.setFormat(playerStats.getPrefix() + " " + player.getName() + " §6>>§f " + event.getMessage());
     }
-
 }

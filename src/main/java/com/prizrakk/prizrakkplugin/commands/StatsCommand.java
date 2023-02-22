@@ -1,6 +1,7 @@
 package com.prizrakk.prizrakkplugin.commands;
 
 import com.prizrakk.prizrakkplugin.PrizrakkPlugin;
+import com.prizrakk.prizrakkplugin.config.MessageConfig;
 import com.prizrakk.prizrakkplugin.db.Database;
 import com.prizrakk.prizrakkplugin.handler.PlayerStats;
 import org.bukkit.Bukkit;
@@ -16,9 +17,11 @@ import java.util.Date;
 public class StatsCommand implements CommandExecutor {
 
     private final Database database;
+    private final PrizrakkPlugin plugin;
 
-    public StatsCommand(Database database) {
+    public StatsCommand(Database database, PrizrakkPlugin plugin) {
         this.database = database;
+        this.plugin = plugin;
     }
 
 
@@ -27,7 +30,7 @@ public class StatsCommand implements CommandExecutor {
         PlayerStats playerStats = database.findPlayerStatsByNICK(player.getName());
 
         if (playerStats == null) {
-            playerStats = new PlayerStats(player.getName(), 0, "Житель",0, 0, 0,0.0, new Date(), new Date());
+            playerStats = new PlayerStats(player.getName(), 0, "Житель",0, 0, 0, 0,0.0, new Date(), new Date());
             database.createPlayerStats(playerStats);
         }
 
@@ -37,7 +40,8 @@ public class StatsCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        String offline = ChatColor.translateAlternateColorCodes('&', PrizrakkPlugin.getInstance().getConfig().getString("message.system.offline"));
+        String offline = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.offline"));
+        String prefix = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.prefix"));
         Player player = (Player) sender;
         if (command.getName().equalsIgnoreCase("stats")) {
             if (args.length == 0) {
@@ -60,7 +64,8 @@ public class StatsCommand implements CommandExecutor {
                         + "\n" + "§2Убито игроков: §e" + kills
                         + "\n" + "§2Смертей: §e" + death
                         + "\n" + "§2Получено предупреждений: §e" + warn
-                        + "\n" + "§2Баланс: §e" + balance);
+                        + "\n" + "§2Баланс: §e" + balance
+                        + "\n" + "§2Репутация: §e" + balance);
             } else {
                 Player target = Bukkit.getPlayerExact(args[0]);
                 if (target == null) {
@@ -87,13 +92,20 @@ public class StatsCommand implements CommandExecutor {
                             + "\n" + "§2Смертей: §e" + death
                             + "\n" + "§2Получено предупреждений: §e" + warn
                             + "\n" + "§2Баланс: §e" + balance
+                            + "\n" + "§2Репутация: §e" + balance
+                            + "\n" + "§2Здоровье игрка: §e" + target.getHealth()
                             + "\n" + "§2Последний вход: §e" + last_login
                             + "\n" + "§2Последний выход: §e" + last_logout
-                            + "\n" + "§2Здоровье игрка: §e" + target.getHealth());
+                            );
                     if (sender.hasPermission("prizrakk.admin")) {
                         sender.sendMessage("§2Ip адресс: §e" + target.getAddress());
                     }
                 }
+            }
+            if (!(sender instanceof Player)) {
+                return true;
+            } else {
+                plugin.getLogger().info(prefix + " >> " + player.getName() + "used: /prizrakk help");
             }
         }
         return true;

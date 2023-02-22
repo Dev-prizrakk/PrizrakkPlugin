@@ -6,6 +6,7 @@ public class PlayerStats {
 
     private final String playerNick;
     private final String prefix;
+    private int rep;
 
     //random stats on each player
     private int warn_count;
@@ -18,7 +19,7 @@ public class PlayerStats {
     private Date lastLogin;
     private Date lastLogout;
 
-    public PlayerStats(String playerNick, int warn_count, String prefix, int deaths, int kills, long blocksBroken, double balance, Date lastLogin, Date lastLogout) {
+    public PlayerStats(String playerNick, int warn_count, String prefix, int rep, int deaths, int kills, long blocksBroken, double balance, Date lastLogin, Date lastLogout) {
         this.playerNick = playerNick;
         this.deaths = deaths;
         this.kills = kills;
@@ -28,6 +29,7 @@ public class PlayerStats {
         this.lastLogout = lastLogout;
         this.warn_count = warn_count;
         this.prefix = prefix;
+        this.rep = rep;
     }
 
     public String getPlayerNick() {
@@ -45,6 +47,12 @@ public class PlayerStats {
     }
     public void setWarn_count(int warn_count) {
         this.warn_count = warn_count;
+    }
+    public int getRep() {
+        return warn_count;
+    }
+    public void setRep(int rep) {
+        this.rep = rep;
     }
 
     public void setDeaths(int deaths) {

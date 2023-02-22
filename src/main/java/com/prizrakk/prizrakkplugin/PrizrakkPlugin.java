@@ -3,6 +3,7 @@ package com.prizrakk.prizrakkplugin;
 import com.prizrakk.prizrakkplugin.Discord.commands.WhoIsOnlineCommand;
 import com.prizrakk.prizrakkplugin.Discord.event.ChatMessage;
 import com.prizrakk.prizrakkplugin.commands.*;
+import com.prizrakk.prizrakkplugin.config.MessageConfig;
 import com.prizrakk.prizrakkplugin.db.Database;
 import com.prizrakk.prizrakkplugin.handler.PlayerEvent;
 import com.prizrakk.prizrakkplugin.handler.PlayerListen;
@@ -29,12 +30,37 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         instance = this;
+        getConfig().options().copyDefaults();
         saveDefaultConfig();
-        double version = 1.2;
+
+        MessageConfig.setup();
+        MessageConfig.get().addDefault("message.system.prefix", "§6[§4PrizrakkPlugin§6] §f");
+        MessageConfig.get().addDefault("message.system.no-perm", "У вас не прав на эту команду!");
+        MessageConfig.get().addDefault("message.system.reload", "Плагин перезапущен!");
+        MessageConfig.get().addDefault("message.system.no-console", "Команда доступна только игроку!");
+        MessageConfig.get().addDefault("message.system.offline", "Этот игрок оффлайн");
+        MessageConfig.get().addDefault("message.system.error", "Произошла ошибка при выполнение команды!");
+        MessageConfig.get().addDefault("message.admin.add-warn", "Вы успешно выдали варн игроку: %player%");
+        MessageConfig.get().addDefault("message.admin.del-warn", "Вы успешно удалили варн игроку: %player%");
+        MessageConfig.get().addDefault("message.admin.add-warn-view", "Вы получили варн! от Администратора %admin% !");
+        MessageConfig.get().addDefault("message.admin.del-warn-view", "Вам сняли варн! Ведите себя хорошо!");
+        MessageConfig.get().addDefault("message.admin.reason.warn-count", "Вы были кикнуты т.к у вас допущено более %warncount% варнов");
+        MessageConfig.get().addDefault("message.time.day", "Установлено дневное время");
+        MessageConfig.get().addDefault("message.time.night", "Установлено ночное время");
+        MessageConfig.get().addDefault("message.event.player-join", "%prefix% %player% зашел на сервер");
+        MessageConfig.get().addDefault("message.event.player-left", "%prefix% %player% вышел с сервера");
+        MessageConfig.get().addDefault("message.other.health", "Вы исцелены!");
+        MessageConfig.get().addDefault("message.other.healed", "Вы исцелили: {player}");
+        MessageConfig.get().addDefault("message.other.feed", "Вы были покормлены!");
+        MessageConfig.get().addDefault("message.other.feeded", "Вы покормили: {player}");
+        MessageConfig.get().addDefault("message.other.gm", "Ваш игровой режим изменился на %game-mode%");
+        MessageConfig.get().options().copyDefaults(true);
+        MessageConfig.save();
+
         getLogger().info(
                 "\n" + ChatColor.BLUE + "====================================="
                 + "\n" + ""
-                + "\n" + ChatColor.GOLD + "Version: " + version
+                + "\n" + ChatColor.GOLD + "Version: " + Bukkit.getVersion()
                 + "\n" + "Плагин сырой и не рекомендуется на профессиональных проектах"
                 + "\n" + "GitHub: https://github.com/Dev-prizrakk/PrizrakkPlugin"
                 + "\n" + "Language RU error? FIX: https://rubukkit.org/threads/podderzhka-kirillicy-serverom-2.32312/"
@@ -57,14 +83,16 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
         Bukkit.getPluginManager().registerEvents(new ChatMessage(database, this), this);
 
         getServer().getPluginCommand("heal").setExecutor(new HealCommand());
+        getServer().getPluginCommand("shop").setExecutor(new ShopCommand());
         getServer().getPluginCommand("feed").setExecutor(new FeedCommand());
         getServer().getPluginCommand("gm").setExecutor(new gmSurvivalCommand(this));
         getServer().getPluginCommand("day").setExecutor(new DayCommand());
         getServer().getPluginCommand("night").setExecutor(new NightCommand());
-        getServer().getPluginCommand("prizrakk").setExecutor(new SystemCommand());
+        getServer().getPluginCommand("prizrakk").setExecutor(new SystemCommand(this));
         getServer().getPluginCommand("admin").setExecutor(new AdminWarnCommand(database, this));
-        getServer().getPluginCommand("stats").setExecutor(new StatsCommand(database));
+        getServer().getPluginCommand("stats").setExecutor(new StatsCommand(database, this));
         getServer().getPluginCommand("god").setExecutor(new GodCommand());
+        getServer().getPluginCommand("bc").setExecutor(new BroadcastCommand());
 
         if (getConfig().getBoolean("config.discord.enable") == true) {
             new DiscordApiBuilder()
@@ -77,7 +105,7 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
                         getPluginLoader().disablePlugin(this);
                         return null;
                     });
-        }
+        } else
         if (getConfig().getBoolean("config.enable") == false) {
             getLogger().warning(ChatColor.RED + "Плагин отключен в конфигурациях!");
             getPluginLoader().disablePlugin(this);
@@ -106,7 +134,7 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
         getLogger().info("Open the following url to invite the bot: " + api.createBotInvite());
 
         api.addListener(new WhoIsOnlineCommand());
-        api.addListener((GloballyAttachableListener) new ChatMessage(database, this));
+        api.addListener(new ChatMessage(database, this));
     }
 }
 
