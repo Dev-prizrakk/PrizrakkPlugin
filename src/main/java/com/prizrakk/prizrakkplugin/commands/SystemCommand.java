@@ -20,7 +20,7 @@ public class SystemCommand extends AbstractCommand {
     @Override
     public void execute(CommandSender sender, String label, String[] args) {
         String prefix = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.prefix"));
-        String noperm = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.noperm"));
+        String noperm = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.no-perm"));
         String reload = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.reload"));
         if (args.length == 0) {
 

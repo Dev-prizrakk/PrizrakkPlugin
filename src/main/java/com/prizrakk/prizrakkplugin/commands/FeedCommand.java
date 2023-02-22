@@ -15,8 +15,8 @@ public class FeedCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         String prefix = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.prefix"));
-        String noperm = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.noperm"));
-        String noconsole = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.noconsole"));
+        String noperm = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.no-perm"));
+        String noconsole = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.no-console"));
         String offline = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.offline"));
         String feed = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.other.feed"));
 

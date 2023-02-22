@@ -39,8 +39,8 @@ public class AdminWarnCommand extends AbstractCommand {
 
         String prefix = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.prefix"));
         String error = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.error"));
-        String noperm = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.noperm"));
-        String delwarnview = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.admin.delwarnview"));
+        String noperm = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.no-perm"));
+        String delwarnview = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.admin.del-warn-view"));
         String offline = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.offline"));
 
 
@@ -68,7 +68,7 @@ public class AdminWarnCommand extends AbstractCommand {
                         database.updatePlayerStats(playerStats);
                         int warncount = playerStats.getWarn_count();
                         if (warncount == plugin.getConfig().getInt("config.warncount")) {
-                            target.kickPlayer(ChatColor.translateAlternateColorCodes('&', PrizrakkPlugin.getInstance().getConfig().getString("message.reason.warncount")).replace("%warncount%", plugin.getConfig().getString("config.warncount")));
+                            target.kickPlayer(ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.reason.warn-count")).replace("%warncount%", plugin.getConfig().getString("config.warncount")));
                         }
                     } catch (SQLException e1) {
                         if (plugin.getConfig().getBoolean("config.debug") == true) {
@@ -76,8 +76,8 @@ public class AdminWarnCommand extends AbstractCommand {
                         }
                         PrizrakkPlugin.getInstance().getLogger().warning("Could not update player stats after block break.");
                     }
-                    String addwarn =  ChatColor.translateAlternateColorCodes('&',plugin.getConfig().getString("message.admin.addwarn")).replace("%player%", target.getName());
-                    String addwarnview = ChatColor.translateAlternateColorCodes('&',plugin.getConfig().getString("message.admin.addwarnview")).replace("%admin%", sender.getName());
+                    String addwarn =  ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.admin.add-warn")).replace("%player%", target.getName());
+                    String addwarnview = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.admin.add-warn-view")).replace("%admin%", sender.getName());
                     sender.sendMessage(prefix + addwarn);
                     target.sendMessage(prefix + addwarnview);
                 }
@@ -102,7 +102,7 @@ public class AdminWarnCommand extends AbstractCommand {
                         }
                         PrizrakkPlugin.getInstance().getLogger().warning("Could not update player stats after block break.");
                     }
-                    sender.sendMessage(prefix + ChatColor.translateAlternateColorCodes('&',plugin.getConfig().getString("message.admin.delwarn")).replace("%player%", target.getName()));
+                    sender.sendMessage(prefix + ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.admin.del-warn")).replace("%player%", target.getName()));
                     target.sendMessage(prefix + delwarnview);
                 }
             }

@@ -16,8 +16,8 @@ public class DayCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         String prefix = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.prefix"));
         String day = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.time.day"));
-        String noconsole = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.noconsole"));
-        String noperm = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.noperm"));
+        String noconsole = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.no-console"));
+        String noperm = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.no-perm"));
 
         if (!(sender instanceof Player)) {
             sender.sendMessage(prefix + noconsole);
