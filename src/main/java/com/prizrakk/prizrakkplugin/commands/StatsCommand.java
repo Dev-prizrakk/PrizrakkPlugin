@@ -30,7 +30,7 @@ public class StatsCommand implements CommandExecutor {
         PlayerStats playerStats = database.findPlayerStatsByNICK(player.getName());
 
         if (playerStats == null) {
-            playerStats = new PlayerStats(player.getName(), 0, "Житель",0, 0, 0, 0,0.0, new Date(), new Date());
+            playerStats = new PlayerStats(player.getName(), 0, "default",0, 0, 0, 0,0.0, new Date(), new Date());
             database.createPlayerStats(playerStats);
         }
 
@@ -57,6 +57,7 @@ public class StatsCommand implements CommandExecutor {
                 int death = playerStats.getDeaths();
                 int kills = playerStats.getKills();
                 int warn = playerStats.getWarn_count();
+                int rep = playerStats.getRep();
                 String nick = playerStats.getPlayerNick();
                 sender.sendMessage("§a====== §6Статистика игрока §a======");
                 sender.sendMessage("§2Ник: §e" + nick
@@ -65,7 +66,7 @@ public class StatsCommand implements CommandExecutor {
                         + "\n" + "§2Смертей: §e" + death
                         + "\n" + "§2Получено предупреждений: §e" + warn
                         + "\n" + "§2Баланс: §e" + balance
-                        + "\n" + "§2Репутация: §e" + balance);
+                        + "\n" + "§2Репутация: §e" + rep);
             } else {
                 Player target = Bukkit.getPlayerExact(args[0]);
                 if (target == null) {
@@ -82,6 +83,7 @@ public class StatsCommand implements CommandExecutor {
                     int death = playerStats.getDeaths();
                     int kills = playerStats.getKills();
                     int warn = playerStats.getWarn_count();
+                    int rep = playerStats.getRep();
                     String nick = playerStats.getPlayerNick();
                     Date last_login = playerStats.getLastLogin();
                     Date last_logout = playerStats.getLastLogout();
@@ -92,7 +94,7 @@ public class StatsCommand implements CommandExecutor {
                             + "\n" + "§2Смертей: §e" + death
                             + "\n" + "§2Получено предупреждений: §e" + warn
                             + "\n" + "§2Баланс: §e" + balance
-                            + "\n" + "§2Репутация: §e" + balance
+                            + "\n" + "§2Репутация: §e" + rep
                             + "\n" + "§2Здоровье игрка: §e" + target.getHealth()
                             + "\n" + "§2Последний вход: §e" + last_login
                             + "\n" + "§2Последний выход: §e" + last_logout

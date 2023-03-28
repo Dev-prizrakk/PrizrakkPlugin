@@ -5,7 +5,7 @@ import java.util.Date;
 public class PlayerStats {
 
     private final String playerNick;
-    private final String prefix;
+    private String prefix;
     private int rep;
 
     //random stats on each player
@@ -38,6 +38,9 @@ public class PlayerStats {
     public String getPrefix() {
         return prefix;
     }
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
 
     public int getDeaths() {
         return deaths;
@@ -49,7 +52,7 @@ public class PlayerStats {
         this.warn_count = warn_count;
     }
     public int getRep() {
-        return warn_count;
+        return rep;
     }
     public void setRep(int rep) {
         this.rep = rep;

@@ -20,7 +20,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter, 
         }
     }
 
-    public abstract void execute(CommandSender sender, String label, String[] args);
+    public abstract void execute(CommandSender sender, String label, String[] args) throws InterruptedException;
 
     public List<String> complete() {
         return null;
@@ -28,7 +28,11 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter, 
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        execute(sender, label, args);
+        try {
+            execute(sender, label, args);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         return true;
     }
 

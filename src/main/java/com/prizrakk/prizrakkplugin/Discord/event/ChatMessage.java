@@ -1,8 +1,11 @@
 package com.prizrakk.prizrakkplugin.Discord.event;
 
 import com.prizrakk.prizrakkplugin.PrizrakkPlugin;
+import com.prizrakk.prizrakkplugin.config.PrefixConfig;
 import com.prizrakk.prizrakkplugin.db.Database;
 import com.prizrakk.prizrakkplugin.handler.PlayerStats;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,6 +15,7 @@ import org.javacord.api.listener.GloballyAttachableListener;
 import org.javacord.api.listener.message.MessageCreateListener;
 
 import java.sql.SQLException;
+import java.sql.Struct;
 import java.util.Date;
 
 
@@ -28,7 +32,7 @@ public class ChatMessage implements Listener, GloballyAttachableListener {
         PlayerStats playerStats = database.findPlayerStatsByNICK(player.getName());
 
         if (playerStats == null) {
-            playerStats = new PlayerStats(player.getName(), 0, "Житель", 0,0, 0, 0,0.0, new Date(), new Date());
+            playerStats = new PlayerStats(player.getName(), 0, "default", 0,0, 0, 0,0.0, new Date(), new Date());
             database.createPlayerStats(playerStats);
         }
 
@@ -44,7 +48,11 @@ public class ChatMessage implements Listener, GloballyAttachableListener {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        //sendMessage(player.getName() + event.getMessage());
-        event.setFormat(playerStats.getPrefix() + " " + player.getName() + " §6>>§f " + event.getMessage());
+        String prefix = playerStats.getPrefix();
+        String message = ChatColor.translateAlternateColorCodes('&' , PrefixConfig.get().getString(prefix + ".chat-format"))
+                .replace("%prefix%", PrefixConfig.get().getString( prefix + ".prefix"))
+                .replace("%player%", player.getName())
+                .replace("%message%", event.getMessage());
+        event.setFormat(message);
     }
 }

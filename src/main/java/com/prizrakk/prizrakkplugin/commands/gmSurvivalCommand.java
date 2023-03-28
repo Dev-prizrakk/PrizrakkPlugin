@@ -22,13 +22,13 @@ public class  gmSurvivalCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
-            plugin.getLogger().info(plugin.getConfig().getString("message.system.prefix") + plugin.getConfig().getString("message.system.noconsole"));
+            plugin.getLogger().info(plugin.getConfig().getString("message.system.prefix") + plugin.getConfig().getString("message.system.no-console"));
             return true;
         }
         Player player =(Player) sender;
 
         if (!sender.hasPermission("prizrakk.gm") || !sender.hasPermission("prizrakk.*")) {
-            sender.sendMessage(plugin.getConfig().getString("message.system.prefix") + plugin.getConfig().getString("message.system.noperm"));
+            sender.sendMessage(plugin.getConfig().getString("message.system.prefix") + plugin.getConfig().getString("message.system.no-perm"));
             return true;
         }
 

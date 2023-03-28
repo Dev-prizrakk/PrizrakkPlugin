@@ -43,3 +43,12 @@ commands:
   bc:
     description: Надо значит надо
     usage: /<command> <message>
+    permission: prizrakk.bc
+  rep:
+    description: Репутация это база!
+    usage: /<command> +/- <player>
+  prefix:
+    description: Ставит/удаляет префикс
+    usage: |
+           /<command> set <player> <prefix>
+           /<command> reset <player>

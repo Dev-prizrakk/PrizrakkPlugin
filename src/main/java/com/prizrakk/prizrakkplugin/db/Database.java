@@ -70,7 +70,7 @@ public class Database {
     public void createPlayerStats(PlayerStats playerStats) throws SQLException {
 
         PreparedStatement statement = getConnection()
-                .prepareStatement("INSERT INTO player_stats(nick, warn_count, prefix, rep, deaths, kills, blocks_broken, balance, last_login, last_logout) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                .prepareStatement("INSERT INTO player_stats(nick, warn_count, prefix, rep, deaths, kills, blocks_broken, balance, last_login, last_logout) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         statement.setString(1, playerStats.getPlayerNick());
         statement.setInt(2, playerStats.getWarn_count());
         statement.setString(3, playerStats.getPrefix());
@@ -90,17 +90,16 @@ public class Database {
 
     public void updatePlayerStats(PlayerStats playerStats) throws SQLException {
 
-        PreparedStatement statement = getConnection().prepareStatement("UPDATE player_stats SET warn_count = ?, deaths = ?, prefix = ?, kills = ?, blocks_broken = ?, balance = ?, last_login = ?, last_logout = ? WHERE nick = ?");
+        PreparedStatement statement = getConnection().prepareStatement("UPDATE player_stats SET warn_count = ?, deaths = ?, rep = ?, kills = ?, blocks_broken = ?, balance = ?, last_login = ?, last_logout = ? WHERE nick = ?");
         statement.setInt(1, playerStats.getWarn_count());
         statement.setInt(2, playerStats.getDeaths());
-        statement.setString(3, playerStats.getPrefix());
-        statement.setInt(4, playerStats.getRep());
-        statement.setInt(5, playerStats.getKills());
-        statement.setLong(6, playerStats.getBlocksBroken());
-        statement.setDouble(7, playerStats.getBalance());
-        statement.setDate(8, new Date(playerStats.getLastLogin().getTime()));
-        statement.setDate(9, new Date(playerStats.getLastLogout().getTime()));
-        statement.setString(10, playerStats.getPlayerNick());
+        statement.setInt(3, playerStats.getRep());
+        statement.setInt(4, playerStats.getKills());
+        statement.setLong(5, playerStats.getBlocksBroken());
+        statement.setDouble(6, playerStats.getBalance());
+        statement.setDate(7, new Date(playerStats.getLastLogin().getTime()));
+        statement.setDate(8, new Date(playerStats.getLastLogout().getTime()));
+        statement.setString(9, playerStats.getPlayerNick());
 
         statement.executeUpdate();
 

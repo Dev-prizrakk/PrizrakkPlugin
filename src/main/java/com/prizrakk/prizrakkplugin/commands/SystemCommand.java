@@ -2,9 +2,11 @@ package com.prizrakk.prizrakkplugin.commands;
 
 import com.prizrakk.prizrakkplugin.PrizrakkPlugin;
 import com.prizrakk.prizrakkplugin.config.MessageConfig;
+import com.prizrakk.prizrakkplugin.config.PrefixConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 
 
@@ -18,7 +20,7 @@ public class SystemCommand extends AbstractCommand {
 
 
     @Override
-    public void execute(CommandSender sender, String label, String[] args) {
+    public void execute(CommandSender sender, String label, String[] args) throws InterruptedException {
         String prefix = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.prefix"));
         String noperm = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.no-perm"));
         String reload = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.reload"));
@@ -28,14 +30,27 @@ public class SystemCommand extends AbstractCommand {
             return;
         }
         if (args[0].equalsIgnoreCase("reload")) {
-            if(!sender.hasPermission("prizrakk.reload") || !sender.hasPermission("prizrakk.*")) {
 
+            if(!sender.hasPermission("prizrakk.reload") || !sender.hasPermission("prizrakk.*")) {
                 sender.sendMessage(prefix + noperm);
                 return;
             }
+            sender.sendMessage(prefix + "Reload plugin.....");
+            plugin.getLogger().info("Reload plugin.....");
+            sender.sendMessage(prefix + "Reload config.yml.....");
+            plugin.getLogger().info("Reload config.yml.....");
             PrizrakkPlugin.getInstance().reloadConfig();
-            //MessageConfig.reload();
+            sender.sendMessage(prefix + "Reload message.yml...");
+            plugin.getLogger().info("Reload message.yml...");
+            MessageConfig.reload();
+            sender.sendMessage(prefix + "Reload message.yml...");
+            plugin.getLogger().info("Reload message.yml...");
+            PrefixConfig.reload();
+            sender.sendMessage(prefix + "Reload success!");
             sender.sendMessage(prefix + reload);
+
+
+
             return;
         }
         if (args[0].equalsIgnoreCase("help")) {

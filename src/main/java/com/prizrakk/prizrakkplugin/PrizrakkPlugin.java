@@ -4,6 +4,7 @@ import com.prizrakk.prizrakkplugin.Discord.commands.WhoIsOnlineCommand;
 import com.prizrakk.prizrakkplugin.Discord.event.ChatMessage;
 import com.prizrakk.prizrakkplugin.commands.*;
 import com.prizrakk.prizrakkplugin.config.MessageConfig;
+import com.prizrakk.prizrakkplugin.config.PrefixConfig;
 import com.prizrakk.prizrakkplugin.db.Database;
 import com.prizrakk.prizrakkplugin.handler.PlayerEvent;
 import com.prizrakk.prizrakkplugin.handler.PlayerListen;
@@ -15,7 +16,6 @@ import java.sql.SQLException;
 import java.util.logging.Logger;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
-import org.javacord.api.listener.GloballyAttachableListener;
 
 public final class PrizrakkPlugin extends JavaPlugin implements Listener {
 
@@ -45,6 +45,10 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
         MessageConfig.get().addDefault("message.admin.add-warn-view", "Вы получили варн! от Администратора %admin% !");
         MessageConfig.get().addDefault("message.admin.del-warn-view", "Вам сняли варн! Ведите себя хорошо!");
         MessageConfig.get().addDefault("message.admin.reason.warn-count", "Вы были кикнуты т.к у вас допущено более %warncount% варнов");
+        MessageConfig.get().addDefault("message.rep.add-rep", "Вы успешно выдали репутацию игроку: %target-player%");
+        MessageConfig.get().addDefault("message.rep.del-rep", "Вы успешно удалили репутацию игроку: %target-player%");
+        MessageConfig.get().addDefault("message.rep.add-rep-view", "Вы получили репутацию! от игрока %player% !");
+        MessageConfig.get().addDefault("message.rep.del-rep-view", "Вам сняли репутацию это плохо :(!");
         MessageConfig.get().addDefault("message.time.day", "Установлено дневное время");
         MessageConfig.get().addDefault("message.time.night", "Установлено ночное время");
         MessageConfig.get().addDefault("message.event.player-join", "%prefix% %player% зашел на сервер");
@@ -56,6 +60,14 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
         MessageConfig.get().addDefault("message.other.gm", "Ваш игровой режим изменился на %game-mode%");
         MessageConfig.get().options().copyDefaults(true);
         MessageConfig.save();
+
+        PrefixConfig.setup();
+        PrefixConfig.get().addDefault("president.prefix", "§6§lПрезидент §f");
+        PrefixConfig.get().addDefault("president.chat-format", "%prefix% %player% &6>>&f %message%");
+        PrefixConfig.get().addDefault("default.prefix", "§8§lЖитель §f");
+        PrefixConfig.get().addDefault("default.chat-format", "%prefix% %player% &6>>&f %message%");
+        PrefixConfig.get().options().copyDefaults(true);
+        PrefixConfig.save();
 
         getLogger().info(
                 "\n" + ChatColor.BLUE + "====================================="
@@ -83,7 +95,6 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
         Bukkit.getPluginManager().registerEvents(new ChatMessage(database, this), this);
 
         getServer().getPluginCommand("heal").setExecutor(new HealCommand());
-        getServer().getPluginCommand("shop").setExecutor(new ShopCommand());
         getServer().getPluginCommand("feed").setExecutor(new FeedCommand());
         getServer().getPluginCommand("gm").setExecutor(new gmSurvivalCommand(this));
         getServer().getPluginCommand("day").setExecutor(new DayCommand());
@@ -91,8 +102,9 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
         getServer().getPluginCommand("prizrakk").setExecutor(new SystemCommand(this));
         getServer().getPluginCommand("admin").setExecutor(new AdminWarnCommand(database, this));
         getServer().getPluginCommand("stats").setExecutor(new StatsCommand(database, this));
-        getServer().getPluginCommand("god").setExecutor(new GodCommand());
         getServer().getPluginCommand("bc").setExecutor(new BroadcastCommand());
+        getServer().getPluginCommand("rep").setExecutor(new RepCommand(database, this));
+        getServer().getPluginCommand("prefix").setExecutor(new PrefixCommand(database, this));
 
         if (getConfig().getBoolean("config.discord.enable") == true) {
             new DiscordApiBuilder()
