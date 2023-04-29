@@ -66,7 +66,7 @@ public class PlayerEvent implements Listener {
             }
             throw new RuntimeException(s);
         }
-        String message = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.event.left"))).replace("%prefix%", playerStats.getPrefix()).replace("%player%", player.getName());
+        String message = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.event.left")).replace("%prefix%", playerStats.getPrefix()).replace("%player%", player.getName());
         e.setQuitMessage(message);
     }
 }
