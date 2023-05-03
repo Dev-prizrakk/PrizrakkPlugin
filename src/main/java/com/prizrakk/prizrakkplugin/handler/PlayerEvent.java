@@ -1,6 +1,7 @@
 package com.prizrakk.prizrakkplugin.handler;
 
 import com.prizrakk.prizrakkplugin.PrizrakkPlugin;
+import com.prizrakk.prizrakkplugin.config.MessageConfig;
 import com.prizrakk.prizrakkplugin.db.Database;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
