@@ -20,41 +20,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: SpraxDev/Action-SpigotMC@v4
-  with:
- # A comma-separated list of Spigot version that should be compiled
-    # These values are later given to the BuildTools.jar as '--rev' argument
-    #
-    # Example: latest, 1.19.2, 1.8.8
-    versions: 1.12.2 # Optional
+    - uses: actions/checkout@v2
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1
+      with:
+        java-version: '1.8'
+        distribution: 'temurin'
+        cache: maven
+    - name: Build with Maven
+      run: mvn package --file pom.xml -X
 
-    # Should sources be generated?
-    # If enabled, BuildTools is provided the '--generate-source' argument
-    generateSrc: false # Optional
-
-    # Should the documentation be generated?
-    # If enabled, BuildTools is provided the '--generate-docs' argument
-    generateDoc: false # Optional
-
-    # Should we disable the BuildTools's Java-Version-Check?
-    # If enabled, BuildTools is provided the '--disable-java-check' argument
-    disableJavaCheck: false # Optional
-
-    # Should we download additional files to deobfucate CraftBukkit and NMS?
-    # If enabled, BuildTools will also install additional files that are required to deobfuscate CraftBukkit and NMS with the SpecialSource-Plugin
-    remapped: false # Optional
-
-    # Disables the check for existing files in the local maven repository
-    # Normally, a version is skipped if it is already installed
-    # in the local maven repository to speed up build time
-    forceRun: false # Optional
-
-    # The amount of builds allowed to run at the same time
-    # Set to '-1' to use system's cpu core count
-    threads: -1 # Optional
-
-    # You can choose between different BuildTools to be used by this action
-    # Available: SpigotMC
-    buildToolProvider: SpigotMC # Optional
-
-    # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive - name: Update dependency graph uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
+    # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive 
+    - name: Update dependency graph 
+      uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
