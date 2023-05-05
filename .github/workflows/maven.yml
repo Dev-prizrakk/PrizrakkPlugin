@@ -20,9 +20,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up JDK 1.8
-      uses: actions/setup-java@v1
+    #- uses: actions/checkout@v2
+    #- name: Set up JDK 1.8
+    #  uses: actions/setup-java@v1
     - uses: SpraxDev/Action-SpigotMC@v4
       with:
         versions: 1.12.2 
@@ -34,8 +34,8 @@ jobs:
         threads: -1
         buildToolProvider: SpigotMC
         
-        java-version: '1.8'
-        distribution: 'temurin'
+        #java-version: '1.8'
+        #distribution: 'temurin'
         cache: maven
     - name: Build with Maven
       run: mvn package --file pom.xml -X
