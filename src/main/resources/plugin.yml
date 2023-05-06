@@ -1,5 +1,5 @@
 name: PrizrakkPlugin
-version: '0.2'
+version: '1.3.1'
 main: com.prizrakk.prizrakkplugin.PrizrakkPlugin
 prefix: PrizrakkPlugin
 authors: [ prizrakk ]
