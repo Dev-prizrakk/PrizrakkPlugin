@@ -72,7 +72,7 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
         getLogger().info(
                 "\n" + ChatColor.BLUE + "====================================="
                 + "\n" + ""
-                + "\n" + ChatColor.GOLD + "Version: " + Bukkit.getVersion()
+                + "\n" + ChatColor.GOLD + "Version: 1.3.1" 
                 + "\n" + "Плагин сырой и не рекомендуется на профессиональных проектах"
                 + "\n" + "GitHub: https://github.com/Dev-prizrakk/PrizrakkPlugin"
                 + "\n" + "Language RU error? FIX: https://rubukkit.org/threads/podderzhka-kirillicy-serverom-2.32312/"
