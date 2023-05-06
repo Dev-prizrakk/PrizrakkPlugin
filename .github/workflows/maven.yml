@@ -6,7 +6,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Java CI with Maven
+name: Build pre-release
 
 on:
   push:
@@ -27,14 +27,17 @@ jobs:
         java-version: '1.8'
         distribution: 'temurin'
         cache: maven
-    #- name: Install
-      #run: |
-       #mkdir spigot
-       #cd spigot
-       #wget -O BuildTools.jar https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar
-       #java -jar BuildTools.jar --rev 1.12.2
-    - name: Build with Maven
+    - name: Build with plugin
       run: mvn -B package --file pom.xml
+    - name: Moving the plugin 
+      run: |
+          mkdir -p /home/runner/work/PrizrakkPlugin/PrizrakkPlugin/builds
+          mv /home/runner/work/PrizrakkPlugin/PrizrakkPlugin/target/PrizrakkPlugin-1.jar /home/runner/work/PrizrakkPlugin/PrizrakkPlugin/builds
+    - name: Upload plugin
+      uses: actions/upload-artifact@v1
+      with:
+        name: Launcher
+        path: builds
     
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     #- name: Update dependency graph
