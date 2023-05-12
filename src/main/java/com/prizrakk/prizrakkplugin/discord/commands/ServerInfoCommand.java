@@ -1,4 +1,4 @@
-package com.prizrakk.prizrakkplugin.Discord.commands;
+package com.prizrakk.prizrakkplugin.discord.commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

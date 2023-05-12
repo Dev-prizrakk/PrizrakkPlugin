@@ -1,7 +1,7 @@
 package com.prizrakk.prizrakkplugin.db;
 
 import com.prizrakk.prizrakkplugin.PrizrakkPlugin;
-import com.prizrakk.prizrakkplugin.handler.PlayerStats;
+import com.prizrakk.prizrakkplugin.events.PlayerStats;
 import org.bukkit.ChatColor;
 
 import java.sql.*;
@@ -100,7 +100,7 @@ public class Database {
         statement.setDate(7, new Date(playerStats.getLastLogin().getTime()));
         statement.setDate(8, new Date(playerStats.getLastLogout().getTime()));
         statement.setString(9, playerStats.getPlayerNick());
-
+        
         statement.executeUpdate();
 
         statement.close();

@@ -1,4 +1,4 @@
-package com.prizrakk.prizrakkplugin.Discord.event;
+package com.prizrakk.prizrakkplugin.event;
 
 import com.prizrakk.prizrakkplugin.PrizrakkPlugin;
 import com.prizrakk.prizrakkplugin.config.PrefixConfig;

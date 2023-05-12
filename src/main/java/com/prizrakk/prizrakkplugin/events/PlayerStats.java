@@ -1,4 +1,4 @@
-package com.prizrakk.prizrakkplugin.handler;
+package com.prizrakk.prizrakkplugin.event;
 
 import java.util.Date;
 

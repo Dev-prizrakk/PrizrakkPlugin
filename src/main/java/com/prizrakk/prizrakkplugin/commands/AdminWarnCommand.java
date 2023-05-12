@@ -3,7 +3,7 @@ package com.prizrakk.prizrakkplugin.commands;
 import com.prizrakk.prizrakkplugin.PrizrakkPlugin;
 import com.prizrakk.prizrakkplugin.config.MessageConfig;
 import com.prizrakk.prizrakkplugin.db.Database;
-import com.prizrakk.prizrakkplugin.handler.PlayerStats;
+import com.prizrakk.prizrakkplugin.events.PlayerStats;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
