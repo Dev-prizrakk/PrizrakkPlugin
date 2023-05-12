@@ -1,13 +1,13 @@
 package com.prizrakk.prizrakkplugin;
 
-import com.prizrakk.prizrakkplugin.Discord.commands.WhoIsOnlineCommand;
-import com.prizrakk.prizrakkplugin.Discord.event.ChatMessage;
+import com.prizrakk.prizrakkplugin.discord.commands.WhoIsOnlineCommand;
+import com.prizrakk.prizrakkplugin.events.ChatMessage;
 import com.prizrakk.prizrakkplugin.commands.*;
 import com.prizrakk.prizrakkplugin.config.MessageConfig;
 import com.prizrakk.prizrakkplugin.config.PrefixConfig;
 import com.prizrakk.prizrakkplugin.db.Database;
-import com.prizrakk.prizrakkplugin.event.PlayerEvent;
-import com.prizrakk.prizrakkplugin.event.PlayerListen;
+import com.prizrakk.prizrakkplugin.events.PlayerEvent;
+import com.prizrakk.prizrakkplugin.events.PlayerListen;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.Listener;
@@ -135,7 +135,7 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
             api.disconnect();
             api = null;
         }
-        database.disconnect;
+        
     }
 
     public static PrizrakkPlugin getInstance() {
