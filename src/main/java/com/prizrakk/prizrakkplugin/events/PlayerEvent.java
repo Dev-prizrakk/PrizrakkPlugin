@@ -1,4 +1,4 @@
-package com.prizrakk.prizrakkplugin.event;
+package com.prizrakk.prizrakkplugin.events;
 
 import com.prizrakk.prizrakkplugin.PrizrakkPlugin;
 import com.prizrakk.prizrakkplugin.config.MessageConfig;

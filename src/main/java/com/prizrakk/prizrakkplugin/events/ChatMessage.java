@@ -1,9 +1,9 @@
-package com.prizrakk.prizrakkplugin.event;
+package com.prizrakk.prizrakkplugin.events;
 
 import com.prizrakk.prizrakkplugin.PrizrakkPlugin;
 import com.prizrakk.prizrakkplugin.config.PrefixConfig;
 import com.prizrakk.prizrakkplugin.db.Database;
-import com.prizrakk.prizrakkplugin.handler.PlayerStats;
+import com.prizrakk.prizrakkplugin.events.PlayerStats;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;

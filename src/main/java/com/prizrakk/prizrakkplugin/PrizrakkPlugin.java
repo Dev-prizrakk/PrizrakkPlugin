@@ -128,11 +128,14 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
 
     @Override
     public void onDisable() {
+        getLogger().info("Выключение дискорд бота(если у вас функция в дискорд выключена то все равно это процедура будет проходить)" 
+        + "\n" + "Выключем соеденение с базой данных");
         if (api != null) {
             // Make sure to disconnect the bot when the plugin gets disabled
             api.disconnect();
             api = null;
         }
+        database.disconnect;
     }
 
     public static PrizrakkPlugin getInstance() {
