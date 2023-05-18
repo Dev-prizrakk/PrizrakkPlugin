@@ -2,6 +2,7 @@ package com.prizrakk.prizrakkplugin.events;
 
 import com.prizrakk.prizrakkplugin.PrizrakkPlugin;
 import com.prizrakk.prizrakkplugin.config.MessageConfig;
+import com.prizrakk.prizrakkplugin.config.PrefixConfig;
 import com.prizrakk.prizrakkplugin.db.Database;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -52,7 +53,8 @@ public class PlayerEvent implements Listener {
         if (warncount == plugin.getConfig().getInt("config.warncount")) {
             player.kickPlayer(ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.reason.warncount")).replace("%warncount%", MessageConfig.get().getString("config.warncount")));
         }
-        String message = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.event.player-join")).replace("%prefix%", playerStats.getPrefix()).replace("%player%", player.getName());
+        String prefix = playerStats.getPrefix();
+        String message = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.event.player-join")).replace("%prefix%", PrefixConfig.get().getString( prefix + ".prefix")).replace("%player%", player.getName());
         e.setJoinMessage(message);
     }
     @EventHandler
@@ -67,7 +69,8 @@ public class PlayerEvent implements Listener {
             }
             throw new RuntimeException(s);
         }
-        String message = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.event.player-left")).replace("%prefix%", playerStats.getPrefix()).replace("%player%", player.getName());
+        String prefix = playerStats.getPrefix();
+        String message = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.event.player-left")).replace("%prefix%", PrefixConfig.get().getString( prefix + ".prefix")).replace("%player%", player.getName());
         e.setQuitMessage(message);
     }
 }
