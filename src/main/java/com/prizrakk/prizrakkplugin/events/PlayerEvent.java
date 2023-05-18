@@ -50,9 +50,9 @@ public class PlayerEvent implements Listener {
         }
         int warncount = playerStats.getWarn_count();
         if (warncount == plugin.getConfig().getInt("config.warncount")) {
-            player.kickPlayer(ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.reason.warncount")).replace("%warncount%", plugin.getConfig().getString("config.warncount")));
+            player.kickPlayer(ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.reason.warncount")).replace("%warncount%", MessageConfig.get().getString("config.warncount")));
         }
-        String message = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.event.join")).replace("%prefix%", playerStats.getPrefix()).replace("%player%", player.getName());
+        String message = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.event.player-join")).replace("%prefix%", playerStats.getPrefix()).replace("%player%", player.getName());
         e.setJoinMessage(message);
     }
     @EventHandler
@@ -67,7 +67,7 @@ public class PlayerEvent implements Listener {
             }
             throw new RuntimeException(s);
         }
-        String message = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.event.left")).replace("%prefix%", playerStats.getPrefix()).replace("%player%", player.getName());
+        String message = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.event.player-left")).replace("%prefix%", playerStats.getPrefix()).replace("%player%", player.getName());
         e.setQuitMessage(message);
     }
 }
