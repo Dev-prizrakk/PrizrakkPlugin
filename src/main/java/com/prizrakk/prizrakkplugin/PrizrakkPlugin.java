@@ -1,6 +1,5 @@
 package com.prizrakk.prizrakkplugin;
 
-import com.prizrakk.prizrakkplugin.discord.commands.WhoIsOnlineCommand;
 import com.prizrakk.prizrakkplugin.events.ChatMessage;
 import com.prizrakk.prizrakkplugin.commands.*;
 import com.prizrakk.prizrakkplugin.config.MessageConfig;
@@ -8,18 +7,25 @@ import com.prizrakk.prizrakkplugin.config.PrefixConfig;
 import com.prizrakk.prizrakkplugin.db.Database;
 import com.prizrakk.prizrakkplugin.events.PlayerEvent;
 import com.prizrakk.prizrakkplugin.events.PlayerListen;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.OnlineStatus;
+import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.awt.*;
 import java.sql.SQLException;
 import java.util.logging.Logger;
-import org.javacord.api.DiscordApi;
-import org.javacord.api.DiscordApiBuilder;
+
 
 public final class PrizrakkPlugin extends JavaPlugin implements Listener {
 
-    private DiscordApi api;
+
 
 
     public PrizrakkPlugin() {
@@ -27,6 +33,7 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
     private static PrizrakkPlugin instance;
     private Database database;
     public Logger log = Logger.getLogger("Minecraft");
+    private static JDA jda;
     @Override
     public void onEnable() {
         instance = this;
@@ -58,6 +65,8 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
         MessageConfig.get().addDefault("message.other.feed", "Вы были покормлены!");
         MessageConfig.get().addDefault("message.other.feeded", "Вы покормили: {player}");
         MessageConfig.get().addDefault("message.other.gm", "Ваш игровой режим изменился на %game-mode%");
+        MessageConfig.get().addDefault("message.embed-start.title", "Запущен!");
+        MessageConfig.get().addDefault("message.embed-start.description", "Сервер майнкрафт успешно был запущен! а также Discord интеграция!");
         MessageConfig.get().options().copyDefaults(true);
         MessageConfig.save();
 
@@ -90,6 +99,8 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
                 ex.printStackTrace();
             }
         }
+
+
         getServer().getPluginManager().registerEvents(new PlayerListen(this, database), this);
         Bukkit.getPluginManager().registerEvents(new PlayerEvent(database, this), this);
         Bukkit.getPluginManager().registerEvents(new ChatMessage(database, this), this);
@@ -106,50 +117,43 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
         getServer().getPluginCommand("rep").setExecutor(new RepCommand(database, this));
         getServer().getPluginCommand("prefix").setExecutor(new PrefixCommand(database, this));
 
-        if (getConfig().getBoolean("config.discord.enable") == true) {
-            new DiscordApiBuilder()
-                    .setToken(getConfig().getString("config.discord.token")) // Set the token of the bot here
-                    .login() // Log the bot in
-                    .thenAccept(this::onConnectToDiscord) // Call #onConnectToDiscord(...) after a successful login
-                    .exceptionally(error -> {
-                        // Log a warning when the login to Discord failed (wrong token?)
-                        getLogger().warning("Failed to connect to Discord! Disabling plugin!");
-                        getPluginLoader().disablePlugin(this);
-                        return null;
-                    });
-        } else
+
+
         if (getConfig().getBoolean("config.enable") == false) {
             getLogger().warning(ChatColor.RED + "Плагин отключен в конфигурациях!");
             getPluginLoader().disablePlugin(this);
         }
+        try {
+            jda = JDABuilder.createDefault(getConfig().getString("config.discord.token"))
+                    .setStatus(OnlineStatus.ONLINE)
+                    .setActivity(Activity.playing(getConfig().getString("config.discord.status")))
+                    .addEventListeners()
+                    .build().awaitReady();
+        } catch (InterruptedException e) {
+            if (getConfig().getBoolean("config.debug") == true) {
+                e.printStackTrace();
+            }
+        }
+
+        sendStartEmbed();
     }
+
 
 
 
     @Override
-    public void onDisable() {
-        getLogger().info("Выключение дискорд бота(если у вас функция в дискорд выключена то все равно это процедура будет проходить)" 
-        + "\n" + "Выключем соеденение с базой данных");
-        if (api != null) {
-            // Make sure to disconnect the bot when the plugin gets disabled
-            api.disconnect();
-            api = null;
-        }
-        
-    }
-
+    public void onDisable() {}
     public static PrizrakkPlugin getInstance() {
         return instance;
     }
-    private void onConnectToDiscord(DiscordApi api) {
-        this.api = api;
-
-        // Log a message that the connection was successful and log the url that is needed to invite the bot
-        getLogger().info("Connected to Discord as " + api.getYourself().getDiscriminatedName());
-        getLogger().info("Open the following url to invite the bot: " + api.createBotInvite());
-
-        api.addListener(new WhoIsOnlineCommand());
-        api.addListener(new ChatMessage(database, this));
+    private void sendStartEmbed(){
+        TextChannel channel = jda.getTextChannelById(getConfig().getString("config.discord.chat"));
+        EmbedBuilder embed = new EmbedBuilder();
+        embed.setColor(new Color(0, 255, 0, 255));
+        embed.setTitle(MessageConfig.get().getString("message.embed-start.title"));
+        embed.setDescription(MessageConfig.get().getString("message.embed-start.description"));
+        channel.sendMessageEmbeds(embed.build());
     }
+
 }
 

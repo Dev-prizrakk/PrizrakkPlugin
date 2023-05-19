@@ -12,6 +12,8 @@ config:
     url: "jdbc:mysql://127.0.0.1:3306/PluginDataBase?autoReconnect=true"
   discord:
     enable: false
+    status: Playing fot Minecraft
     token: ""
     chat: ""
     console: ""
+    guild-id: ""

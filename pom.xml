@@ -7,7 +7,7 @@
     <groupId>com.prizrakk</groupId>
     <artifactId>PrizrakkPlugin</artifactId>
     <version>1</version>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
 
     <name>PrizrakkPlugin</name>
@@ -66,11 +66,11 @@
     </repositories>
 
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/net.dv8tion/JDA -->
         <dependency>
-            <groupId>org.javacord</groupId>
-            <artifactId>javacord</artifactId>
-            <version>3.0.4</version>
-            <type>pom</type>
+            <groupId>net.dv8tion</groupId>
+            <artifactId>JDA</artifactId>
+            <version>5.0.0-beta.9</version>
         </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>
