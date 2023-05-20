@@ -164,7 +164,9 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
 
     @Override
     public void onDisable() {
-        sendStopEmbed();
+        if(getConfig().getBoolean("config.discord.enable") == true) {
+            sendStopEmbed();
+        }
     }
     public static PrizrakkPlugin getInstance() {
         return instance;
