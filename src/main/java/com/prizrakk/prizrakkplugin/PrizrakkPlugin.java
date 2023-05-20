@@ -1,6 +1,7 @@
 package com.prizrakk.prizrakkplugin;
 
 import com.prizrakk.prizrakkplugin.discord.events.ChatListener;
+import com.prizrakk.prizrakkplugin.discord.events.MessageListener;
 import com.prizrakk.prizrakkplugin.events.ChatMessage;
 import com.prizrakk.prizrakkplugin.commands.*;
 import com.prizrakk.prizrakkplugin.config.MessageConfig;
@@ -14,9 +15,11 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.awt.*;
@@ -34,7 +37,9 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
     private static PrizrakkPlugin instance;
     private Database database;
     public Logger log = Logger.getLogger("Minecraft");
-    public static long chanel_id = 1108824986447269959L;
+    public PluginDescriptionFile pdf = this.getDescription();
+
+
     private static JDA jda;
     @Override
     public void onEnable() {
@@ -68,28 +73,35 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
         MessageConfig.get().addDefault("message.other.feed", "Вы были покормлены!");
         MessageConfig.get().addDefault("message.other.feeded", "Вы покормили: {player}");
         MessageConfig.get().addDefault("message.other.gm", "Ваш игровой режим изменился на %game-mode%");
-        MessageConfig.get().addDefault("message.embed-start.title", "Запущен!");
-        MessageConfig.get().addDefault("message.embed-start.description", "Сервер майнкрафт успешно был запущен! а также Discord интеграция!");
+        MessageConfig.get().addDefault("message.discord.embed-start.title", "Запущен!");
+        MessageConfig.get().addDefault("message.discord.embed-start.description", "Сервер майнкрафт успешно был запущен! а также Discord интеграция!");
+        MessageConfig.get().addDefault("message.discord.embed-stop.title", "Прощай!");
+        MessageConfig.get().addDefault("message.discord.embed-stop.description", "Сервер майнкрафт отключился! эй это не повод растраиватся может просто перезапускается!");
+        MessageConfig.get().addDefault("message.discord.events.join", "%prefix% %player% зашел на сервер!");
+        MessageConfig.get().addDefault("message.discord.events.left", "%prefix% %player% вышел с сервера!");
+        MessageConfig.get().addDefault("message.discord.send-discord-to-minecraft" , "&6[&9DISCORD&6] &f %username% &5>>&f %message%");
         MessageConfig.get().options().copyDefaults(true);
         MessageConfig.save();
 
         PrefixConfig.setup();
         PrefixConfig.get().addDefault("president.prefix", "§6§lПрезидент §f");
+        PrefixConfig.get().addDefault("president.prefix-discord", "Президент ");
         PrefixConfig.get().addDefault("president.chat-format", "%prefix% %player% &6>>&f %message%");
         PrefixConfig.get().addDefault("default.prefix", "§8§lЖитель §f");
+        PrefixConfig.get().addDefault("default.prefix-discord", "Житель ");
         PrefixConfig.get().addDefault("default.chat-format", "%prefix% %player% &6>>&f %message%");
         PrefixConfig.get().options().copyDefaults(true);
         PrefixConfig.save();
 
         getLogger().info(
                 "\n" + ChatColor.BLUE + "====================================="
-                + "\n" + " "
-                + "\n" + ChatColor.GOLD + "Version: 1.3.1" 
-                + "\n" + "Плагин сырой и не рекомендуется на профессиональных проектах"
-                + "\n" + "GitHub: https://github.com/Dev-prizrakk/PrizrakkPlugin"
-                + "\n" + "Language RU error? FIX: https://rubukkit.org/threads/podderzhka-kirillicy-serverom-2.32312/"
-                + "\n" + " "
-                + "\n" + ChatColor.BLUE + "=====================================");
+                        + "\n" + " "
+                        + "\n" + ChatColor.GOLD + "Version: " + pdf.getVersion()
+                        + "\n" + "Плагин сырой и не рекомендуется на профессиональных проектах"
+                        + "\n" + "GitHub: https://github.com/Dev-prizrakk/PrizrakkPlugin"
+                        + "\n" + "Language RU error? FIX: https://rubukkit.org/threads/podderzhka-kirillicy-serverom-2.32312/"
+                        + "\n" + " "
+                        + "\n" + ChatColor.BLUE + "=====================================");
         getLogger().info(" ");
         getLogger().info("Включаем дискорд интеграцию.....");
         getLogger().info("Проверка подключения к базе данных.........");
@@ -103,8 +115,7 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
             }
         }
 
-        getServer().getPluginManager().registerEvents(new ChatListener(), this);
-        getServer().getPluginManager().registerEvents(new PlayerListen(this, database), this);
+
         Bukkit.getPluginManager().registerEvents(new PlayerEvent(database, this), this);
         Bukkit.getPluginManager().registerEvents(new ChatMessage(database, this), this);
 
@@ -127,34 +138,51 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
             getLogger().warning(ChatColor.RED + "Плагин отключен в конфигурациях!");
             getPluginLoader().disablePlugin(this);
         }
-        try {
-            jda = JDABuilder.createDefault(getConfig().getString("config.discord.token"))
-                    .setStatus(OnlineStatus.ONLINE)
-                    .setActivity(Activity.playing(getConfig().getString("config.discord.status")))
-                    .addEventListeners()
-                    .build().awaitReady();
-        } catch (InterruptedException e) {
-            if (getConfig().getBoolean("config.debug") == true) {
-                e.printStackTrace();
+        if (getConfig().getBoolean("config.discord.enable") == true) {
+            try {
+                jda = JDABuilder.createDefault(getConfig().getString("config.discord.token"))
+                        .setStatus(OnlineStatus.ONLINE)
+                        .setActivity(Activity.playing(getConfig().getString("config.discord.status")))
+                        .enableIntents(GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT)
+                        .addEventListeners(new MessageListener(this))
+                        .build().awaitReady();
+            } catch (InterruptedException e) {
+                if (getConfig().getBoolean("config.debug") == true) {
+                    e.printStackTrace();
+                }
             }
+            sendStartEmbed();
+            getServer().getPluginManager().registerEvents(new ChatListener(this), this);
+            getServer().getPluginManager().registerEvents(new PlayerListen(this, database), this);
+        }else {
+            getLogger().info("Discord integration was not initialized because it was turned off in the configuration");
         }
-        sendStartEmbed();
     }
 
 
 
 
     @Override
-    public void onDisable() {}
+    public void onDisable() {
+        sendStopEmbed();
+    }
     public static PrizrakkPlugin getInstance() {
         return instance;
     }
     private void sendStartEmbed(){
-        TextChannel channel = jda.getTextChannelById(chanel_id);
+        TextChannel channel = jda.getTextChannelById(getConfig().getString("config.discord.chat"));
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(new Color(0, 255, 0, 255));
-        embed.setTitle(MessageConfig.get().getString("message.embed-start.title"));
-        embed.setDescription(MessageConfig.get().getString("message.embed-start.description"));
+        embed.setTitle(MessageConfig.get().getString("message.discord.embed-start.title"));
+        embed.setDescription(MessageConfig.get().getString("message.discord.embed-start.description"));
+        channel.sendMessageEmbeds(embed.build()).queue();
+    }
+    private void sendStopEmbed(){
+        TextChannel channel = jda.getTextChannelById(getConfig().getString("config.discord.chat"));
+        EmbedBuilder embed = new EmbedBuilder();
+        embed.setColor(new Color(255, 0, 0, 255));
+        embed.setTitle(MessageConfig.get().getString("message.discord.embed-stop.title"));
+        embed.setDescription(MessageConfig.get().getString("message.discord.embed-stop.description"));
         channel.sendMessageEmbeds(embed.build()).queue();
     }
     public static JDA getJda() {

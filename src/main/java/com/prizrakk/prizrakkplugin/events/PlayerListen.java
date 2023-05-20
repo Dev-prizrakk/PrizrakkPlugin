@@ -92,9 +92,11 @@ public class PlayerListen implements Listener {
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent e){
 
+        /*
         if(e.getEntity().getKiller() == null){
             return;
         }
+         */
 
         Player killer = e.getEntity().getKiller();
         Player p = e.getEntity();

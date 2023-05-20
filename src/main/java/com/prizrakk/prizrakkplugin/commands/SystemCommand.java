@@ -3,10 +3,9 @@ package com.prizrakk.prizrakkplugin.commands;
 import com.prizrakk.prizrakkplugin.PrizrakkPlugin;
 import com.prizrakk.prizrakkplugin.config.MessageConfig;
 import com.prizrakk.prizrakkplugin.config.PrefixConfig;
-import org.bukkit.Bukkit;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 
 
@@ -20,7 +19,7 @@ public class SystemCommand extends AbstractCommand {
 
 
     @Override
-    public void execute(CommandSender sender, String label, String[] args) throws InterruptedException {
+    public void execute(CommandSender sender, String label, String[] args) {
         String prefix = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.prefix"));
         String noperm = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.no-perm"));
         String reload = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.reload"));
@@ -35,17 +34,9 @@ public class SystemCommand extends AbstractCommand {
                 sender.sendMessage(prefix + noperm);
                 return;
             }
-            sender.sendMessage(prefix + "Reload plugin.....");
-            plugin.getLogger().info("Reload plugin.....");
-            sender.sendMessage(prefix + "Reload config.yml.....");
-            plugin.getLogger().info("Reload config.yml.....");
-            PrizrakkPlugin.getInstance().reloadConfig();
-            sender.sendMessage(prefix + "Reload message.yml...");
-            plugin.getLogger().info("Reload message.yml...");
-            MessageConfig.reload();
-            sender.sendMessage(prefix + "Reload message.yml...");
-            plugin.getLogger().info("Reload message.yml...");
+            plugin.getLogger().info("Reload plugin....");
             PrefixConfig.reload();
+            MessageConfig.reload();
             sender.sendMessage(prefix + "Reload success!");
             sender.sendMessage(prefix + reload);
 
@@ -55,7 +46,7 @@ public class SystemCommand extends AbstractCommand {
         }
         if (args[0].equalsIgnoreCase("help")) {
             sender.sendMessage("§a=-=-=-=-=-=-=-= §6PrizrakkPlugin help list §a=-=-=-=-=-=-=-="
-                    + "\n" + "                       §6Plugin Version: §51.3.1"
+                    + "\n" + "                       §6Plugin Version: §5" + plugin.pdf.getVersion()
                     + "\n" + "         §eSupport Server: §6https://discord.gg/U6H9Zw7Fhg      "
                     + "\n" + " "
                     + "\n" + "§91. §2/prizrakk reload §9-§b Перезапускает плагин! §4(prizrakk.reload)"

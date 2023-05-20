@@ -1,10 +1,10 @@
-# § для использования цветов
-# Версия конфигиа 0.3
-
 config:
+  # Если нужно выключить времено плагин то вот вам (незнаю зачем но пусть будет)
   enable: true
+  #Включает полный лог ошибок (Рекомендация: включить при ошибках в базе данных!)
   debug: false
   warncount: 3
+  # Тестовый вариация логов команд (скоро будет удалена)
   console-out-log-command: true
   mysql:
     user: "user"
@@ -13,6 +13,9 @@ config:
   discord:
     enable: false
     status: Playing fot Minecraft
+    #Можно использовать: %uuid% для получения через uuid игрока
+    #Или можно через %nickname% тоесть через ник игрока
+    skin-head-url: "https://crafatar.com/avatars/%uuid%"
     token: ""
     chat: ""
     console: ""
