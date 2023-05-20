@@ -3,10 +3,8 @@ package com.prizrakk.prizrakkplugin.commands;
 import com.prizrakk.prizrakkplugin.PrizrakkPlugin;
 import com.prizrakk.prizrakkplugin.config.MessageConfig;
 import com.prizrakk.prizrakkplugin.config.PrefixConfig;
-
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 
 public class SystemCommand extends AbstractCommand {
@@ -45,7 +43,8 @@ public class SystemCommand extends AbstractCommand {
             return;
         }
         if (args[0].equalsIgnoreCase("help")) {
-            sender.sendMessage("§a=-=-=-=-=-=-=-= §6PrizrakkPlugin help list §a=-=-=-=-=-=-=-="
+            sender.sendMessage(" "
+                    + "\n" + "§a=-=-=-=-=-=-=-= §6PrizrakkPlugin help list §a=-=-=-=-=-=-=-="
                     + "\n" + "                       §6Plugin Version: §5" + plugin.pdf.getVersion()
                     + "\n" + "         §eSupport Server: §6https://discord.gg/U6H9Zw7Fhg      "
                     + "\n" + " "
@@ -59,12 +58,6 @@ public class SystemCommand extends AbstractCommand {
                     + "\n" + "§98. §2/day world §9-§b устанавливает дневное время! §4(prizrakk.time.day)"
                     + "\n" + "§99. §2/night world §9-§b устанавливает ночное время суток! §4(prizrakk.time.night)"
                     + "\n" + "§a=-=-=-=-=-=-=-= §6PrizrakkPlugin help list §a=-=-=-=-=-=-=-=");
-            if (!(sender instanceof Player)) {
-                return;
-            } else {
-                Player player = (Player) sender;
-                plugin.getLogger().info(prefix + " >> " + player.getName() + "used: /prizrakk help");
-            }
             return;
         }
 

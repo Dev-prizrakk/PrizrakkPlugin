@@ -2,6 +2,7 @@ package com.prizrakk.prizrakkplugin.commands;
 
 
 import com.prizrakk.prizrakkplugin.PrizrakkPlugin;
+import com.prizrakk.prizrakkplugin.config.MessageConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
@@ -27,8 +28,10 @@ public class  gmSurvivalCommand implements CommandExecutor {
         }
         Player player =(Player) sender;
 
+        String message = MessageConfig.get().getString("message.system.prefix") + plugin.getConfig().getString("message.other.gm");
+        String message_other = MessageConfig.get().getString("message.system.prefix") + plugin.getConfig().getString("message.other.gm-other");
         if (!sender.hasPermission("prizrakk.gm") || !sender.hasPermission("prizrakk.*")) {
-            sender.sendMessage(plugin.getConfig().getString("message.system.prefix") + plugin.getConfig().getString("message.system.no-perm"));
+            sender.sendMessage(MessageConfig.get().getString("message.system.prefix") + MessageConfig.get().getString("message.system.no-perm"));
             return true;
         }
 
@@ -36,19 +39,19 @@ public class  gmSurvivalCommand implements CommandExecutor {
         if (args.length == 1) {
             if (args[0].equalsIgnoreCase("0") || args[0].equalsIgnoreCase("survival")) {
                 player.setGameMode(GameMode.SURVIVAL);
-                player.sendMessage(plugin.getConfig().getString("message.system.prefix") + plugin.getConfig().getString("message.other.gm") + " SURVIVAL");
+                player.sendMessage(message.replace("%gamemode%", "survival"));
                 player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
             } else if (args[0].equalsIgnoreCase("1") || args[0].equalsIgnoreCase("creative")) {
                 player.setGameMode(GameMode.CREATIVE);
-                player.sendMessage(plugin.getConfig().getString("message.system.prefix") + plugin.getConfig().getString("message.other.gm") + " CREATIVE");
+                player.sendMessage(message.replace("%gamemode%", "creative"));
                 player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
             } else if (args[0].equalsIgnoreCase("2") || args[0].equalsIgnoreCase("adventure")) {
                 player.setGameMode(GameMode.ADVENTURE);
-                player.sendMessage(plugin.getConfig().getString("message.system.prefix") + plugin.getConfig().getString("message.other.gm") + " ADVENTURE");
+                player.sendMessage(message.replace("%gamemode%", "adventure"));
                 player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
             } else if (args[0].equalsIgnoreCase("3") || args[0].equalsIgnoreCase("spectator")) {
                 player.setGameMode(GameMode.SPECTATOR);
-                player.sendMessage(plugin.getConfig().getString("message.system.prefix") + plugin.getConfig().getString("message.other.gm") + " SPECTATOR");
+                player.sendMessage(message.replace("%gamemode%", "spectator"));
                 player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
             }
         }
@@ -61,25 +64,25 @@ public class  gmSurvivalCommand implements CommandExecutor {
                 if (args[0].equalsIgnoreCase("0") || args[0].equalsIgnoreCase("survival")) {
                     for (Player pl : Bukkit.getOnlinePlayers()) {
                         pl.setGameMode(GameMode.SURVIVAL);
-                        pl.sendMessage(plugin.getConfig().getString("message.system.prefix") + plugin.getConfig().getString("message.other.gm") + " SURVIVAL");
+                        pl.sendMessage(message_other.replace("%gamemode%", "survival"));
                         pl.playSound(pl.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
                     }
                 } else if (args[0].equalsIgnoreCase("1") || args[0].equalsIgnoreCase("creative")) {
                     for (Player pl : Bukkit.getOnlinePlayers()) {
                         pl.setGameMode(GameMode.CREATIVE);
-                        pl.sendMessage(plugin.getConfig().getString("message.system.prefix") + plugin.getConfig().getString("message.other.gm") + " CREATIVE");
+                        pl.sendMessage(message_other.replace("%gamemode%", "creative"));
                         pl.playSound(pl.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
                     }
                 } else if (args[0].equalsIgnoreCase("2") || args[0].equalsIgnoreCase("adventure")) {
                     for (Player pl : Bukkit.getOnlinePlayers()) {
                         pl.setGameMode(GameMode.ADVENTURE);
-                        pl.sendMessage(plugin.getConfig().getString("message.system.prefix") + plugin.getConfig().getString("message.other.gm") + " ADVENTURE");
+                        pl.sendMessage(message_other.replace("%gamemode%", "adventure"));
                         pl.playSound(pl.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
                     }
                 } else if (args[0].equalsIgnoreCase("3") || args[0].equalsIgnoreCase("spectator")) {
                     for (Player pl : Bukkit.getOnlinePlayers()) {
                         pl.setGameMode(GameMode.SPECTATOR);
-                        pl.sendMessage(plugin.getConfig().getString("message.system.prefix") + plugin.getConfig().getString("message.other.gm") + " SPECTATOR");
+                        pl.sendMessage(message_other.replace("%gamemode%", "spectator"));
                         pl.playSound(pl.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
                     }
                 }
@@ -88,24 +91,24 @@ public class  gmSurvivalCommand implements CommandExecutor {
                     Player s = Bukkit.getPlayer(args[1]);
                     if (args[0].equalsIgnoreCase("0") || args[0].equalsIgnoreCase("survival")) {
                         s.setGameMode(GameMode.SURVIVAL);
-                        s.sendMessage(plugin.getConfig().getString("message.system.prefix") + plugin.getConfig().getString("message.other.gm") + " SURVIVAL");
+                        s.sendMessage(message.replace("%gamemode%", "survival"));
                         s.playSound(s.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
                     } else if (args[0].equalsIgnoreCase("1") || args[0].equalsIgnoreCase("creative")) {
                         s.setGameMode(GameMode.CREATIVE);
-                        s.sendMessage(plugin.getConfig().getString("message.system.prefix") + plugin.getConfig().getString("message.other.gm") + " CREATIVE");
+                        s.sendMessage(message.replace("%gamemode%", "creative"));
                         s.playSound(s.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
                     } else if (args[0].equalsIgnoreCase("2") || args[0].equalsIgnoreCase("adventure")) {
                         s.setGameMode(GameMode.ADVENTURE);
-                        s.sendMessage(plugin.getConfig().getString("message.system.prefix") + plugin.getConfig().getString("message.other.gm") + " ADVENTURE");
+                        s.sendMessage(message.replace("%gamemode%", "adventure"));
                         s.playSound(s.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
                     } else if (args[0].equalsIgnoreCase("3") || args[0].equalsIgnoreCase("spectator")) {
                         s.setGameMode(GameMode.SPECTATOR);
-                        s.sendMessage(plugin.getConfig().getString("message.system.prefix") + plugin.getConfig().getString("message.other.gm") + " SPECTATOR");
+                        s.sendMessage(message.replace("%gamemode%", "spectator"));
                         s.playSound(s.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
                     }
                 } catch (Exception e) {
                     for (Player pl : Bukkit.getOnlinePlayers()) {
-                        pl.sendMessage(plugin.getConfig().getString("message.system.prefix") + plugin.getConfig().getString("message.system.offline"));
+                        pl.sendMessage(MessageConfig.get().getString("message.system.prefix") + MessageConfig.get().getString("message.system.offline"));
                         player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 10, 1);
                     }
                 }
@@ -114,5 +117,3 @@ public class  gmSurvivalCommand implements CommandExecutor {
         return true;
     }
 }
-
-
