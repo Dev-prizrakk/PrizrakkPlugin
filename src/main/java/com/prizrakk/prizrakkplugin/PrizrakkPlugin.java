@@ -1,12 +1,12 @@
 package com.prizrakk.prizrakkplugin;
 
-import com.prizrakk.prizrakkplugin.discord.events.ChatListener;
-import com.prizrakk.prizrakkplugin.discord.events.MessageListener;
-import com.prizrakk.prizrakkplugin.events.ChatMessage;
 import com.prizrakk.prizrakkplugin.commands.*;
 import com.prizrakk.prizrakkplugin.config.MessageConfig;
 import com.prizrakk.prizrakkplugin.config.PrefixConfig;
 import com.prizrakk.prizrakkplugin.db.Database;
+import com.prizrakk.prizrakkplugin.discord.events.ChatListener;
+import com.prizrakk.prizrakkplugin.discord.events.MessageListener;
+import com.prizrakk.prizrakkplugin.events.ChatMessage;
 import com.prizrakk.prizrakkplugin.events.PlayerEvent;
 import com.prizrakk.prizrakkplugin.events.PlayerListen;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -16,12 +16,12 @@ import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.requests.GatewayIntent;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
-
 import java.awt.*;
 import java.sql.SQLException;
 import java.util.logging.Logger;
@@ -104,6 +104,17 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
                         + "\n" + " "
                         + "\n" + ChatColor.BLUE + "=====================================");
         getLogger().info(" ");
+        getLogger().info("Проверка новых версий плагина...");
+
+        new UpdateChecker(this, 109972).getVersion(version -> {
+            if (this.getDescription().getVersion().equals(version)) {
+                getLogger().info("Новых версий не обнаружено! Поздравляю вы используете последнюю версию");
+            } else {
+                getLogger().warning("Обнаружено новая версия! Пожалуйста обновитесь");
+                getLogger().warning("GitHub: https://github.com/Dev-prizrakk/PrizrakkPlugin");
+                getLogger().warning("SpigotMC: https://www.spigotmc.org/resources/prizrakkplugin.109972/");
+            }
+        });
         getLogger().info("Включаем дискорд интеграцию.....");
         getLogger().info("Проверка подключения к базе данных.........");
         try {
