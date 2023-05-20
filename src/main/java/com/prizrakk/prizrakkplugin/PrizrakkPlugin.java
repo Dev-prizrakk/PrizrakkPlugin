@@ -72,7 +72,8 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
         MessageConfig.get().addDefault("message.other.healed", "Вы исцелили: {player}");
         MessageConfig.get().addDefault("message.other.feed", "Вы были покормлены!");
         MessageConfig.get().addDefault("message.other.feeded", "Вы покормили: {player}");
-        MessageConfig.get().addDefault("message.other.gm", "Ваш игровой режим изменился на %game-mode%");
+        MessageConfig.get().addDefault("message.other.gm", "Ваш игровой режим изменился на %gamemode%");
+        MessageConfig.get().addDefault("message.other.gm-other", "Вам изменили игровой режим на %gamemode%");
         MessageConfig.get().addDefault("message.discord.embed-start.title", "Запущен!");
         MessageConfig.get().addDefault("message.discord.embed-start.description", "Сервер майнкрафт успешно был запущен! а также Discord интеграция!");
         MessageConfig.get().addDefault("message.discord.embed-stop.title", "Прощай!");
@@ -127,7 +128,7 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
         getServer().getPluginCommand("night").setExecutor(new NightCommand());
         getServer().getPluginCommand("prizrakk").setExecutor(new SystemCommand(this));
         getServer().getPluginCommand("admin").setExecutor(new AdminWarnCommand(database, this));
-        getServer().getPluginCommand("stats").setExecutor(new StatsCommand(database, this));
+        getServer().getPluginCommand("stats").setExecutor(new StatsCommand(database));
         getServer().getPluginCommand("bc").setExecutor(new BroadcastCommand());
         getServer().getPluginCommand("rep").setExecutor(new RepCommand(database, this));
         getServer().getPluginCommand("prefix").setExecutor(new PrefixCommand(database, this));
