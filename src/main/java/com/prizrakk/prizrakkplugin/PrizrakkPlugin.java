@@ -1,5 +1,6 @@
 package com.prizrakk.prizrakkplugin;
 
+import com.prizrakk.prizrakkplugin.discord.events.ChatListener;
 import com.prizrakk.prizrakkplugin.events.ChatMessage;
 import com.prizrakk.prizrakkplugin.commands.*;
 import com.prizrakk.prizrakkplugin.config.MessageConfig;
@@ -33,12 +34,14 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
     private static PrizrakkPlugin instance;
     private Database database;
     public Logger log = Logger.getLogger("Minecraft");
+    public static long chanel_id = 1108824986447269959L;
     private static JDA jda;
     @Override
     public void onEnable() {
         instance = this;
         getConfig().options().copyDefaults();
         saveDefaultConfig();
+
 
         MessageConfig.setup();
         MessageConfig.get().addDefault("message.system.prefix", "§6[§4PrizrakkPlugin§6] §f");
@@ -100,10 +103,11 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
             }
         }
 
-
+        getServer().getPluginManager().registerEvents(new ChatListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerListen(this, database), this);
         Bukkit.getPluginManager().registerEvents(new PlayerEvent(database, this), this);
         Bukkit.getPluginManager().registerEvents(new ChatMessage(database, this), this);
+
 
         getServer().getPluginCommand("heal").setExecutor(new HealCommand());
         getServer().getPluginCommand("feed").setExecutor(new FeedCommand());
@@ -134,7 +138,6 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
                 e.printStackTrace();
             }
         }
-
         sendStartEmbed();
     }
 
@@ -147,12 +150,15 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
         return instance;
     }
     private void sendStartEmbed(){
-        TextChannel channel = jda.getTextChannelById(getConfig().getString("config.discord.chat"));
+        TextChannel channel = jda.getTextChannelById(chanel_id);
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(new Color(0, 255, 0, 255));
         embed.setTitle(MessageConfig.get().getString("message.embed-start.title"));
         embed.setDescription(MessageConfig.get().getString("message.embed-start.description"));
-        channel.sendMessageEmbeds(embed.build());
+        channel.sendMessageEmbeds(embed.build()).queue();
+    }
+    public static JDA getJda() {
+        return jda;
     }
 
 }
