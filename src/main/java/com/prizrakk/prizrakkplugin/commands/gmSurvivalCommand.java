@@ -9,10 +9,14 @@ import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.List;
 
-public class  gmSurvivalCommand implements CommandExecutor {
+
+public class  gmSurvivalCommand implements CommandExecutor, TabExecutor {
     private final PrizrakkPlugin plugin;
 
     public gmSurvivalCommand(PrizrakkPlugin plugin) {
@@ -23,13 +27,13 @@ public class  gmSurvivalCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
-            plugin.getLogger().info(plugin.getConfig().getString("message.system.prefix") + plugin.getConfig().getString("message.system.no-console"));
+            plugin.getLogger().info(("message.system.prefix") + MessageConfig.get().getString("message.system.no-console"));
             return true;
         }
         Player player =(Player) sender;
 
-        String message = MessageConfig.get().getString("message.system.prefix") + plugin.getConfig().getString("message.other.gm");
-        String message_other = MessageConfig.get().getString("message.system.prefix") + plugin.getConfig().getString("message.other.gm-other");
+        String message = MessageConfig.get().getString("message.system.prefix") + MessageConfig.get().getString("message.other.gm");
+        String message_other = MessageConfig.get().getString("message.system.prefix") + MessageConfig.get().getString("message.other.gm-other");
         if (!sender.hasPermission("prizrakk.gm") || !sender.hasPermission("prizrakk.*")) {
             sender.sendMessage(MessageConfig.get().getString("message.system.prefix") + MessageConfig.get().getString("message.system.no-perm"));
             return true;
@@ -115,5 +119,22 @@ public class  gmSurvivalCommand implements CommandExecutor {
             }
         }
         return true;
+    }
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        if (args.length == 1){
+            List<String> arguments = new ArrayList<>();
+            arguments.add("0");
+            arguments.add("1");
+            arguments.add("2");
+            arguments.add("3");
+            arguments.add("survival");
+            arguments.add("creative");
+            arguments.add("adventure");
+            arguments.add("spectator");
+
+            return arguments;
+        }
+        return null;
     }
 }

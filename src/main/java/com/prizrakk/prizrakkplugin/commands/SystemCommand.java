@@ -4,10 +4,14 @@ import com.prizrakk.prizrakkplugin.PrizrakkPlugin;
 import com.prizrakk.prizrakkplugin.config.MessageConfig;
 import com.prizrakk.prizrakkplugin.config.PrefixConfig;
 import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
+import java.util.ArrayList;
+import java.util.List;
 
 
-public class SystemCommand extends AbstractCommand {
+public class SystemCommand extends AbstractCommand implements TabExecutor {
 
     public SystemCommand(PrizrakkPlugin plugin) {
         super("prizrakk");
@@ -62,5 +66,16 @@ public class SystemCommand extends AbstractCommand {
         }
 
         sender.sendMessage(prefix + ChatColor.RED + "Неизвестная подкоманда: " + args[0]);
+    }
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        if (args.length == 1){
+            List<String> arguments = new ArrayList<>();
+            arguments.add("help");
+            arguments.add("reload");
+
+            return arguments;
+        }
+        return null;
     }
 }

@@ -6,13 +6,17 @@ import com.prizrakk.prizrakkplugin.db.Database;
 import com.prizrakk.prizrakkplugin.events.PlayerStats;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-public class AdminWarnCommand extends AbstractCommand {
+public class AdminWarnCommand extends AbstractCommand implements TabExecutor {
 
     public AdminWarnCommand(Database database, PrizrakkPlugin plugin) {
         super("admin");
@@ -110,5 +114,16 @@ public class AdminWarnCommand extends AbstractCommand {
         }
         sender.sendMessage(prefix + ChatColor.RED + "Неизвестная подкоманда: " + args[0]);
 
+    }
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        if (args.length == 1){
+            List<String> arguments = new ArrayList<>();
+            arguments.add("addwarn");
+            arguments.add("delwarn");
+
+            return arguments;
+        }
+        return null;
     }
 }

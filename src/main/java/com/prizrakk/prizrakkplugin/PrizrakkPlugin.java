@@ -16,12 +16,12 @@ import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.requests.GatewayIntent;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
+
 import java.awt.*;
 import java.sql.SQLException;
 import java.util.logging.Logger;
@@ -46,6 +46,7 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
         instance = this;
         getConfig().options().copyDefaults();
         saveDefaultConfig();
+
 
 
         MessageConfig.setup();

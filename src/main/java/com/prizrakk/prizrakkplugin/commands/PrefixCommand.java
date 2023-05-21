@@ -1,18 +1,22 @@
 package com.prizrakk.prizrakkplugin.commands;
 
 import com.prizrakk.prizrakkplugin.PrizrakkPlugin;
+
 import com.prizrakk.prizrakkplugin.config.MessageConfig;
 import com.prizrakk.prizrakkplugin.db.Database;
 import com.prizrakk.prizrakkplugin.events.PlayerStats;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-public class PrefixCommand extends AbstractCommand {
+public class PrefixCommand extends AbstractCommand  {
     public PrefixCommand(Database database, PrizrakkPlugin plugin) {
         super("prefix");
         this.database = database;
@@ -92,12 +96,23 @@ public class PrefixCommand extends AbstractCommand {
                         }
                         PrizrakkPlugin.getInstance().getLogger().warning("Could not update player stats after block break.");
                     }
-                    sender.sendMessage("Prefix set!");
+                    sender.sendMessage("Prefix reset");
                 }
             }
             return;
         }
         sender.sendMessage(prefix + ChatColor.RED + "Неизвестная подкоманда: " + args[0]);
 
+    }
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        if (args.length == 1){
+            List<String> arguments = new ArrayList<>();
+            arguments.add("set");
+            arguments.add("reset");
+
+            return arguments;
+        }
+        return null;
     }
 }

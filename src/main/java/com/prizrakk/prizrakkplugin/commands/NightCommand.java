@@ -7,9 +7,13 @@ import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 
-public class NightCommand implements CommandExecutor {
+import java.util.ArrayList;
+import java.util.List;
+
+public class NightCommand implements CommandExecutor, TabExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         String prefix = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.prefix"));
@@ -33,4 +37,15 @@ public class NightCommand implements CommandExecutor {
         sender.sendMessage(prefix + ChatColor.RED + "/night world ");
         return true;
     }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        if (args.length == 1){
+            List<String> arguments = new ArrayList<>();
+            arguments.add("world");
+            return arguments;
+        }
+        return null;
+    }
+
 }

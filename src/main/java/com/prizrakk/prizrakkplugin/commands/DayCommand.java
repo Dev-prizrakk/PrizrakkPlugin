@@ -7,9 +7,13 @@ import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 
-public class DayCommand implements CommandExecutor {
+import java.util.ArrayList;
+import java.util.List;
+
+public class DayCommand implements CommandExecutor, TabExecutor {
 
 
     @Override
@@ -33,8 +37,19 @@ public class DayCommand implements CommandExecutor {
         if (args[0].equalsIgnoreCase("world")) {
             a.setTime(5000);
             sender.sendMessage(prefix + day);
+            return true;
         }
         sender.sendMessage(prefix + ChatColor.RED + "/day world ");
         return true;
+    }
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        if (args.length == 1){
+            List<String> arguments = new ArrayList<>();
+            arguments.add("world");
+
+            return arguments;
+        }
+        return null;
     }
 }

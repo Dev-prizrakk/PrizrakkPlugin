@@ -1,6 +1,5 @@
 package com.prizrakk.prizrakkplugin.commands;
 
-import com.prizrakk.prizrakkplugin.PrizrakkPlugin;
 import com.prizrakk.prizrakkplugin.config.MessageConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -43,7 +42,7 @@ public class HealCommand implements CommandExecutor {
                     target.setHealth(maxHealth);
                     target.setFoodLevel(20);
                     target.sendMessage(prefix + health);
-                    String healed = ChatColor.translateAlternateColorCodes('&', PrizrakkPlugin.getInstance().getConfig().getString("message.other.healed")).replace("{player}", target.getName());
+                    String healed = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.other.healed")).replace("{player}", target.getName());
                     player.sendMessage(prefix + healed);
                 }
             }
