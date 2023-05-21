@@ -28,27 +28,18 @@ import java.util.logging.Logger;
 
 
 public final class PrizrakkPlugin extends JavaPlugin implements Listener {
-
-
-
-
     public PrizrakkPlugin() {
     }
     private static PrizrakkPlugin instance;
     private Database database;
     public Logger log = Logger.getLogger("Minecraft");
     public PluginDescriptionFile pdf = this.getDescription();
-
-
     private static JDA jda;
     @Override
     public void onEnable() {
         instance = this;
         getConfig().options().copyDefaults();
         saveDefaultConfig();
-
-
-
         MessageConfig.setup();
         MessageConfig.get().addDefault("message.system.prefix", "§6[§4PrizrakkPlugin§6] §f");
         MessageConfig.get().addDefault("message.system.no-perm", "У вас не прав на эту команду!");
@@ -94,7 +85,6 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
         PrefixConfig.get().addDefault("default.chat-format", "%prefix% %player% &6>>&f %message%");
         PrefixConfig.get().options().copyDefaults(true);
         PrefixConfig.save();
-
         getLogger().info(
                 "\n" + ChatColor.BLUE + "====================================="
                         + "\n" + " "
@@ -106,7 +96,6 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
                         + "\n" + ChatColor.BLUE + "=====================================");
         getLogger().info(" ");
         getLogger().info("Проверка новых версий плагина...");
-
         new UpdateChecker(this, 109972).getVersion(version -> {
             if (this.getDescription().getVersion().equals(version)) {
                 getLogger().info("Новых версий не обнаружено! Поздравляю вы используете последнюю версию");
@@ -116,7 +105,6 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
                 getLogger().warning("SpigotMC: https://www.spigotmc.org/resources/prizrakkplugin.109972/");
             }
         });
-        getLogger().info("Включаем дискорд интеграцию.....");
         getLogger().info("Проверка подключения к базе данных.........");
         try {
             this.database = new Database(this);
@@ -127,12 +115,8 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
                 ex.printStackTrace();
             }
         }
-
-
         Bukkit.getPluginManager().registerEvents(new PlayerEvent(database, this), this);
         Bukkit.getPluginManager().registerEvents(new ChatMessage(database, this), this);
-
-
         getServer().getPluginCommand("heal").setExecutor(new HealCommand());
         getServer().getPluginCommand("feed").setExecutor(new FeedCommand());
         getServer().getPluginCommand("gm").setExecutor(new gmSurvivalCommand(this));
@@ -144,14 +128,12 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
         getServer().getPluginCommand("bc").setExecutor(new BroadcastCommand());
         getServer().getPluginCommand("rep").setExecutor(new RepCommand(database, this));
         getServer().getPluginCommand("prefix").setExecutor(new PrefixCommand(database, this));
-
-
-
         if (getConfig().getBoolean("config.enable") == false) {
             getLogger().warning(ChatColor.RED + "Плагин отключен в конфигурациях!");
             getPluginLoader().disablePlugin(this);
         }
         if (getConfig().getBoolean("config.discord.enable") == true) {
+            getLogger().info("Включаем дискорд интеграцию.....");
             try {
                 jda = JDABuilder.createDefault(getConfig().getString("config.discord.token"))
                         .setStatus(OnlineStatus.ONLINE)
@@ -171,10 +153,6 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
             getLogger().info("Discord integration was not initialized because it was turned off in the configuration");
         }
     }
-
-
-
-
     @Override
     public void onDisable() {
         if(getConfig().getBoolean("config.discord.enable") == true) {
@@ -203,6 +181,5 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
     public static JDA getJda() {
         return jda;
     }
-
 }
 
