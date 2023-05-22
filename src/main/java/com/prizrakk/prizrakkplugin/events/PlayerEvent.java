@@ -72,7 +72,7 @@ public class PlayerEvent implements Listener {
             EmbedBuilder embed = new EmbedBuilder();
             embed.setColor(randomColor);
             embed.setAuthor(player.getName(), null, skin_head);
-            embed.setDescription(MessageConfig.get().getString("message.discord.events.left").replace("%prefix%", PrefixConfig.get().getString(prefix + ".prefix-discord")).replace("%player%", player.getName()));
+            embed.setDescription(MessageConfig.get().getString("message.discord.events.join").replace("%prefix%", PrefixConfig.get().getString(prefix + ".prefix-discord")).replace("%player%", player.getName()));
             embed.setFooter("Powered by prizrakk-team");
 
 

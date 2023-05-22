@@ -4,9 +4,11 @@ import com.prizrakk.prizrakkplugin.commands.*;
 import com.prizrakk.prizrakkplugin.config.MessageConfig;
 import com.prizrakk.prizrakkplugin.config.PrefixConfig;
 import com.prizrakk.prizrakkplugin.db.Database;
+import com.prizrakk.prizrakkplugin.discord.commands.CommandManager;
 import com.prizrakk.prizrakkplugin.discord.events.ChatListener;
 import com.prizrakk.prizrakkplugin.discord.events.MessageListener;
 import com.prizrakk.prizrakkplugin.events.ChatMessage;
+import com.prizrakk.prizrakkplugin.events.Lag;
 import com.prizrakk.prizrakkplugin.events.PlayerEvent;
 import com.prizrakk.prizrakkplugin.events.PlayerListen;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -24,12 +26,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.awt.*;
 import java.sql.SQLException;
+import java.time.Duration;
 import java.util.logging.Logger;
 
 
-public final class PrizrakkPlugin extends JavaPlugin implements Listener {
-    public PrizrakkPlugin() {
-    }
+public final class PrizrakkPlugin extends JavaPlugin implements Listener  {
     private static PrizrakkPlugin instance;
     private Database database;
     public Logger log = Logger.getLogger("Minecraft");
@@ -115,6 +116,7 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
                 ex.printStackTrace();
             }
         }
+        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Lag(), 100L, 1L);
         Bukkit.getPluginManager().registerEvents(new PlayerEvent(database, this), this);
         Bukkit.getPluginManager().registerEvents(new ChatMessage(database, this), this);
         getServer().getPluginCommand("heal").setExecutor(new HealCommand());
@@ -140,6 +142,7 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
                         .setActivity(Activity.playing(getConfig().getString("config.discord.status")))
                         .enableIntents(GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT)
                         .addEventListeners(new MessageListener(this))
+                        .addEventListeners(new CommandManager(this))
                         .build().awaitReady();
             } catch (InterruptedException e) {
                 if (getConfig().getBoolean("config.debug") == true) {
@@ -157,6 +160,18 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener {
     public void onDisable() {
         if(getConfig().getBoolean("config.discord.enable") == true) {
             sendStopEmbed();
+            jda.shutdown();
+            try {
+                if (!jda.awaitShutdown(Duration.ofSeconds(10))) {
+                    jda.shutdownNow(); // Cancel all remaining requests
+                    jda.awaitShutdown(); // Wait until shutdown is complete (indefinitely)
+                }
+            } catch (InterruptedException e) {
+                if (getConfig().getBoolean("config.debug") == true) {
+                    e.printStackTrace();
+                }
+            }
+
         }
     }
     public static PrizrakkPlugin getInstance() {
