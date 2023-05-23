@@ -11,6 +11,8 @@ import com.prizrakk.prizrakkplugin.events.ChatMessage;
 import com.prizrakk.prizrakkplugin.events.Lag;
 import com.prizrakk.prizrakkplugin.events.PlayerEvent;
 import com.prizrakk.prizrakkplugin.events.PlayerListen;
+import com.prizrakk.prizrakkplugin.web.WebRun;
+import com.prizrakk.prizrakkplugin.web.api.PlayerApi;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -27,7 +29,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.awt.*;
 import java.sql.SQLException;
 import java.time.Duration;
+import java.io.File;
+import java.io.IOException;
 import java.util.logging.Logger;
+import com.sun.net.httpserver.HttpServer;
+import java.net.InetSocketAddress;
 
 
 public final class PrizrakkPlugin extends JavaPlugin implements Listener  {
@@ -36,6 +42,7 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener  {
     public Logger log = Logger.getLogger("Minecraft");
     public PluginDescriptionFile pdf = this.getDescription();
     private static JDA jda;
+    private HttpServer server;
     @Override
     public void onEnable() {
         instance = this;
@@ -154,6 +161,21 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener  {
             getServer().getPluginManager().registerEvents(new PlayerListen(this, database), this);
         }else {
             getLogger().info("Discord integration was not initialized because it was turned off in the configuration");
+        }
+        File folder = new File(getDataFolder() + "/web-site");
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+        try {
+            Long webport = getConfig().getLong("config.web.port");
+            server = HttpServer.create(new InetSocketAddress(Math.toIntExact(webport)), 0);
+            server.createContext("/", new WebRun(this));
+            server.createContext("/playerlist",  new PlayerApi(this));
+            server.createContext("/playercount",  new PlayerApi(this));
+            server.setExecutor(null);
+            server.start();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
     @Override
