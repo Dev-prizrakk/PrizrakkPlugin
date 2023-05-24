@@ -48,7 +48,7 @@ public class PlayerEvent implements Listener {
         try {
             playerStats = getPlayerStatsFromDatabase(player);
         } catch (SQLException s) {
-            if (plugin.getConfig().getBoolean("config.debug") == true) {
+            if (plugin.getConfig().getBoolean("config.debug")) {
                 s.printStackTrace();
             }
             throw new RuntimeException(s);
@@ -61,7 +61,7 @@ public class PlayerEvent implements Listener {
         String message = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.event.player-join")).replace("%prefix%", PrefixConfig.get().getString( prefix + ".prefix")).replace("%player%", player.getName());
         e.setJoinMessage(message);
 
-        if(plugin.getConfig().getBoolean("config.discord.enable") == true) {
+        if(plugin.getConfig().getBoolean("config.discord.enable")) {
             Random random = new Random();
             float r = random.nextFloat();
             float g = random.nextFloat();
@@ -87,7 +87,7 @@ public class PlayerEvent implements Listener {
         try {
             playerStats = getPlayerStatsFromDatabase(player);
         } catch (SQLException s) {
-            if (plugin.getConfig().getBoolean("config.debug") == true) {
+            if (plugin.getConfig().getBoolean("config.debug")) {
                 s.printStackTrace();
             }
             throw new RuntimeException(s);
@@ -96,7 +96,7 @@ public class PlayerEvent implements Listener {
         String message = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.event.player-left")).replace("%prefix%", PrefixConfig.get().getString( prefix + ".prefix")).replace("%player%", player.getName());
         e.setQuitMessage(message);
 
-        if(plugin.getConfig().getBoolean("config.discord.enable") == true) {
+        if(plugin.getConfig().getBoolean("config.discord.enable")) {
             Random random = new Random();
             float r = random.nextFloat();
             float g = random.nextFloat();

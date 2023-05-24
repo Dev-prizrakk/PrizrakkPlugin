@@ -64,7 +64,7 @@ public class RepCommand extends AbstractCommand implements TabExecutor {
                         playerStats.setRep(playerStats.getRep() + 1);
                         database.updatePlayerStats(playerStats);
                     } catch (SQLException e1) {
-                        if (plugin.getConfig().getBoolean("config.debug") == true) {
+                        if (plugin.getConfig().getBoolean("config.debug")) {
                             e1.printStackTrace();
                         }
                         PrizrakkPlugin.getInstance().getLogger().warning("Could not update player stats after block break.");
@@ -90,7 +90,7 @@ public class RepCommand extends AbstractCommand implements TabExecutor {
                         playerStats.setRep(playerStats.getRep() - 1);
                         database.updatePlayerStats(playerStats);
                     } catch (SQLException e1) {
-                        if (plugin.getConfig().getBoolean("config.debug") == true) {
+                        if (plugin.getConfig().getBoolean("config.debug")) {
                             e1.printStackTrace();
                         }
                         PrizrakkPlugin.getInstance().getLogger().warning("Could not update player stats after block break.");

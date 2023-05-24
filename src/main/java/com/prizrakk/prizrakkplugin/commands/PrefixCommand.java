@@ -38,7 +38,7 @@ public class PrefixCommand extends AbstractCommand  {
     }
 
     @Override
-    public void execute(CommandSender sender, String label, String[] args) throws InterruptedException {
+    public void execute(CommandSender sender, String label, String[] args) {
         String prefix = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.prefix"));
         String error = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.error"));
         String noperm = ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.system.no-perm"));
@@ -68,7 +68,7 @@ public class PrefixCommand extends AbstractCommand  {
                         playerStats.setPrefix(args[2]);
                         database.updatePlayerStats(playerStats);
                     } catch (SQLException e1) {
-                        if (plugin.getConfig().getBoolean("config.debug") == true) {
+                        if (plugin.getConfig().getBoolean("config.debug")) {
                             e1.printStackTrace();
                         }
                         PrizrakkPlugin.getInstance().getLogger().warning("Could not update player stats after block break.");
@@ -91,7 +91,7 @@ public class PrefixCommand extends AbstractCommand  {
                         playerStats.setPrefix("default");
                         database.updatePlayerStats(playerStats);
                     } catch (SQLException e1) {
-                        if (plugin.getConfig().getBoolean("config.debug") == true) {
+                        if (plugin.getConfig().getBoolean("config.debug")) {
                             e1.printStackTrace();
                         }
                         PrizrakkPlugin.getInstance().getLogger().warning("Could not update player stats after block break.");

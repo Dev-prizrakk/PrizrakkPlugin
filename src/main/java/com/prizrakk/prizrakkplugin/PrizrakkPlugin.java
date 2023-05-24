@@ -119,7 +119,7 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener  {
             database.initializeDatabase();
         }catch (SQLException ex) {
             log.warning(ChatColor.RED + "Error Database!");
-            if (getConfig().getBoolean("config.debug") == true) {
+            if (getConfig().getBoolean("config.debug")) {
                 ex.printStackTrace();
             }
         }
@@ -137,11 +137,11 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener  {
         getServer().getPluginCommand("bc").setExecutor(new BroadcastCommand());
         getServer().getPluginCommand("rep").setExecutor(new RepCommand(database, this));
         getServer().getPluginCommand("prefix").setExecutor(new PrefixCommand(database, this));
-        if (getConfig().getBoolean("config.enable") == false) {
+        if (getConfig().getBoolean("config.enable")) {
             getLogger().warning(ChatColor.RED + "Плагин отключен в конфигурациях!");
             getPluginLoader().disablePlugin(this);
         }
-        if (getConfig().getBoolean("config.discord.enable") == true) {
+        if (getConfig().getBoolean("config.discord.enable")) {
             getLogger().info("Включаем дискорд интеграцию.....");
             try {
                 jda = JDABuilder.createDefault(getConfig().getString("config.discord.token"))
@@ -152,7 +152,7 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener  {
                         .addEventListeners(new CommandManager(this))
                         .build().awaitReady();
             } catch (InterruptedException e) {
-                if (getConfig().getBoolean("config.debug") == true) {
+                if (getConfig().getBoolean("config.debug")) {
                     e.printStackTrace();
                 }
             }
@@ -180,7 +180,7 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener  {
     }
     @Override
     public void onDisable() {
-        if(getConfig().getBoolean("config.discord.enable") == true) {
+        if(getConfig().getBoolean("config.discord.enable")) {
             sendStopEmbed();
             jda.shutdown();
             try {
@@ -189,7 +189,7 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener  {
                     jda.awaitShutdown(); // Wait until shutdown is complete (indefinitely)
                 }
             } catch (InterruptedException e) {
-                if (getConfig().getBoolean("config.debug") == true) {
+                if (getConfig().getBoolean("config.debug")) {
                     e.printStackTrace();
                 }
             }

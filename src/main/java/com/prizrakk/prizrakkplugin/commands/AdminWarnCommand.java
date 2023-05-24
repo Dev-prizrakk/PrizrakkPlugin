@@ -75,7 +75,7 @@ public class AdminWarnCommand extends AbstractCommand implements TabExecutor {
                             target.kickPlayer(ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("message.reason.warn-count")).replace("%warncount%", plugin.getConfig().getString("config.warncount")));
                         }
                     } catch (SQLException e1) {
-                        if (plugin.getConfig().getBoolean("config.debug") == true) {
+                        if (plugin.getConfig().getBoolean("config.debug")) {
                             e1.printStackTrace();
                         }
                         PrizrakkPlugin.getInstance().getLogger().warning("Could not update player stats after block break.");
@@ -101,7 +101,7 @@ public class AdminWarnCommand extends AbstractCommand implements TabExecutor {
                         playerStats.setWarn_count(playerStats.getWarn_count() - 1);
                         database.updatePlayerStats(playerStats);
                     } catch (SQLException e1) {
-                        if (plugin.getConfig().getBoolean("config.debug") == true) {
+                        if (plugin.getConfig().getBoolean("config.debug")) {
                             e1.printStackTrace();
                         }
                         PrizrakkPlugin.getInstance().getLogger().warning("Could not update player stats after block break.");

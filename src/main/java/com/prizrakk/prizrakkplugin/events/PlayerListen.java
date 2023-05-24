@@ -44,7 +44,7 @@ public class PlayerListen implements Listener {
             playerStats.setLastLogin(new Date());
             database.updatePlayerStats(playerStats);
         }catch (SQLException e){
-            if (plugin.getConfig().getBoolean("config.debug") == true) {
+            if (plugin.getConfig().getBoolean("config.debug")) {
                     e.printStackTrace();
             }
             plugin.getLogger().warning("Could not update player stats after join.");
@@ -62,7 +62,7 @@ public class PlayerListen implements Listener {
             playerStats.setLastLogout(new Date());
             database.updatePlayerStats(playerStats);
         }catch (SQLException e1){
-            if (plugin.getConfig().getBoolean("config.debug") == true) {
+            if (plugin.getConfig().getBoolean("config.debug")) {
                 e1.printStackTrace();
             }
             plugin.getLogger().warning("Could not update player stats after quit.");
@@ -81,7 +81,7 @@ public class PlayerListen implements Listener {
             playerStats.setBalance(playerStats.getBalance() + 0.50);
             database.updatePlayerStats(playerStats);
         } catch (SQLException e1) {
-            if (plugin.getConfig().getBoolean("config.debug") == true) {
+            if (plugin.getConfig().getBoolean("config.debug")) {
                 e1.printStackTrace();
             }
             plugin.getLogger().warning("Could not update player stats after block break.");
@@ -92,11 +92,10 @@ public class PlayerListen implements Listener {
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent e){
 
-        /*
         if(e.getEntity().getKiller() == null){
             return;
         }
-         */
+
 
         Player killer = e.getEntity().getKiller();
         Player p = e.getEntity();
@@ -115,7 +114,7 @@ public class PlayerListen implements Listener {
             database.updatePlayerStats(pStats);
 
         }catch (SQLException e1){
-            if (plugin.getConfig().getBoolean("config.debug") == true) {
+            if (plugin.getConfig().getBoolean("config.debug")) {
                 e1.printStackTrace();
             }
             plugin.getLogger().warning("Could not update player stats after death.");
