@@ -113,7 +113,7 @@ public final class PrizrakkPlugin extends JavaPlugin implements Listener  {
                 getLogger().warning("SpigotMC: https://www.spigotmc.org/resources/prizrakkplugin.109972/");
             }
         });
-        getLogger().info("Проверка подключения к базе данных.........");
+        getLogger().info("Проверка подключения к базе данных..........");
         try {
             this.database = new Database(this);
             database.initializeDatabase();
